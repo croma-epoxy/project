@@ -1,0 +1,13 @@
+/* Aspect ratio 16:9 para diapositivas tipo Canva */
+.slide-container {
+  aspect-ratio: 16 / 9;
+  max-height: 88vh;
+  box-shadow: 0 20px 40px -15px rgba(15, 44, 89, 0.15);
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+  border-radius: 4px;
+}
