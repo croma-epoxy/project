@@ -35,8 +35,8 @@ const slidesData = [
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-slate-200 pt-4 text-xs md:text-sm">
           <div>
-            <span class="text-slate-400 block font-medium">Memorista:</span>
-            <span class="font-bold text-slate-800">[Tu Nombre Completo]</span>
+            <span class="text-slate-400 block font-medium">Investigador:</span>
+            <span class="font-bold text-slate-800">Sergio Ruiz Torres</span>
           </div>
           <div>
             <span class="text-slate-400 block font-medium">Profesor Guía:</span>
