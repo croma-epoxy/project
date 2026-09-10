@@ -183,8 +183,8 @@ const slidesData = [
           <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Panel de Supervisión (Streamlit)</h2>
         </div>
         <div class="my-auto w-full flex justify-center bg-slate-50 border border-slate-200 rounded-lg p-2">
-          <!-- Debes tener "Dashboard.jpeg" en la misma carpeta que el HTML -->
-          <img src="Dashboard.jpeg" alt="Dashboard Streamlit" class="max-h-[50vh] object-contain rounded">
+          <!-- Debes tener "Dashboard.png" en la misma carpeta que el HTML -->
+          <img src="Dashboard.png" alt="Dashboard Streamlit" class="max-h-[50vh] object-contain rounded">
         </div>
         <!-- Rúbrica LabSens: Rótulo en la parte inferior -->
         <p class="fig-caption">Figura 1.2: Panel reactivo mostrando variables climáticas y diagnóstico foliar procesado en local.</p>
