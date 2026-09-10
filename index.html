@@ -3,30 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Presentación MR1 - Sistema Ciberfísico Invernadero PUCV</title>
-  <!-- Tailwind CSS CDN -->
+  <title>Presentación MR1 - Invernadero Autónomo</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Montserrat & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            pucv: {
-              navy: '#0F2C59',
-              blue: '#1E3A8A',
-              gold: '#D97706',
-              light: '#F8FAFC'
-            },
-            agri: {
-              green: '#15803D',
-              emerald: '#10B981',
-              lime: '#84CC16',
-              alert: '#DC2626'
-            }
+            pucv: { navy: '#0F2C59', blue: '#1E3A8A', gold: '#D97706', light: '#F8FAFC' },
+            agri: { green: '#15803D', emerald: '#10B981', lime: '#84CC16', alert: '#DC2626' }
           },
           fontFamily: {
             heading: ['Montserrat', 'sans-serif'],
@@ -37,122 +23,68 @@
       }
     }
   </script>
-  <!-- Hoja de estilos externa -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-slate-900 text-slate-800 font-sans min-h-screen flex flex-col items-center justify-between overflow-x-hidden select-none">
 
-  <!-- BARRA SUPERIOR DE CONTROL -->
+  <!-- BARRA SUPERIOR -->
   <header class="w-full bg-slate-950/80 backdrop-blur border-b border-slate-800 px-6 py-2 flex items-center justify-between z-50 text-white text-xs md:text-sm">
     <div class="flex items-center space-x-3">
       <span class="inline-block w-3 h-3 rounded-full bg-agri-emerald animate-pulse"></span>
-      <span class="font-heading font-bold tracking-wide text-slate-200">PUCV • EIE • LabSens/DY</span>
+      <span class="font-heading font-bold tracking-wide text-slate-200">PUCV • EIE • LabSens</span>
       <span class="text-slate-500">|</span>
-      <span class="text-slate-400 font-mono hidden md:inline">MR1: Arquitectura & Avances</span>
+      <span class="text-slate-400 font-mono hidden md:inline">MR1: Arquitectura, Persistencia y Dashboard</span>
     </div>
-
-    <!-- Temporizador Oficial LabSens (17 min ± 2 min) -->
     <div class="flex items-center space-x-4 bg-slate-900 px-4 py-1 rounded-full border border-slate-700">
       <span class="text-slate-400 text-xs">Tiempo:</span>
       <span id="timerDisplay" class="font-mono font-bold text-base text-agri-emerald">00:00</span>
-      <button id="btnTimerToggle" onclick="toggleTimer()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded text-xs">Iniciar</button>
-      <button onclick="resetTimer()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded text-xs">Reset</button>
+      <button onclick="toggleTimer()" id="btnTimerToggle" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">Iniciar</button>
+      <button onclick="resetTimer()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded">Reset</button>
     </div>
-
-    <!-- Acciones -->
     <div class="flex items-center space-x-3">
-      <button onclick="togglePresenterNotes()" class="px-3 py-1 bg-pucv-blue hover:bg-blue-800 rounded font-medium transition text-xs flex items-center gap-1">
-        <span>🎙️ Guion Orador</span>
-      </button>
-      <button onclick="toggleGridOverview()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded font-medium transition text-xs">
-        📑 Grilla
-      </button>
-      <button onclick="toggleFullscreen()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-medium transition text-xs">
-        ⛶ Pantalla Completa
-      </button>
+      <button onclick="togglePresenterNotes()" class="px-3 py-1 bg-pucv-blue hover:bg-blue-800 rounded font-medium transition text-xs">🎙️ Guion Orador</button>
+      <button onclick="toggleFullscreen()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-medium transition text-xs">⛶ Pantalla Completa</button>
     </div>
   </header>
 
-  <!-- LIENZO PRINCIPAL DE LA DIAPOSITIVA (CANVA STYLE 16:9) -->
-  <main class="flex-1 w-full max-w-7xl p-4 flex items-center justify-center">
+  <!-- LIENZO PRINCIPAL -->
+  <main class="flex-1 w-full max-w-7xl p-4 flex items-center justify-center relative">
     <div id="slideViewport" class="slide-container w-full bg-white rounded-2xl relative flex flex-col justify-between overflow-hidden border border-slate-200 transition-all duration-300">
-      <!-- El contenido de la diapositiva se inyecta dinámicamente -->
-      <div id="slideContent" class="w-full h-full p-8 md:p-12 flex flex-col justify-between overflow-y-auto custom-scrollbar">
-        <!-- Render dinámico de slide -->
-      </div>
-
-      <!-- Marca fija LabSens: Número en extremo inferior derecho -->
+      <div id="slideContent" class="w-full h-full p-8 md:p-10 flex flex-col justify-between overflow-y-auto custom-scrollbar"></div>
+      
+      <!-- Regla LabSens: Número en extremo inferior derecho -->
       <div class="absolute bottom-4 right-8 font-heading font-bold text-slate-400 text-sm md:text-base tracking-widest pointer-events-none">
         <span id="slideNumberBadge">1</span>
       </div>
     </div>
   </main>
 
-  <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+  <!-- BARRA INFERIOR -->
   <footer class="w-full bg-slate-950/80 backdrop-blur border-t border-slate-800 px-6 py-2.5 flex items-center justify-between text-white text-xs md:text-sm">
     <div class="text-slate-400 flex items-center space-x-2">
-      <span class="hidden sm:inline">Navegación: Teclas [←] [→] o [Espacio]</span>
-      <span class="text-slate-600">•</span>
       <span id="currentSlideTitle" class="text-slate-300 font-medium truncate max-w-xs">Portada Formal</span>
     </div>
-
     <div class="flex items-center space-x-4">
-      <button onclick="prevSlide()" class="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition disabled:opacity-30 disabled:cursor-not-allowed">
-        ◀ Anterior
-      </button>
-      <span class="font-mono text-slate-300 font-bold px-2">
-        <span id="navCurrentSlide">1</span> / <span id="navTotalSlides">15</span>
-      </span>
-      <button onclick="nextSlide()" class="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition disabled:opacity-30 disabled:cursor-not-allowed">
-        Siguiente ▶
-      </button>
+      <button onclick="prevSlide()" class="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition">◀ Anterior</button>
+      <span class="font-mono text-slate-300 font-bold px-2"><span id="navCurrentSlide">1</span> / <span id="navTotalSlides">9</span></span>
+      <button onclick="nextSlide()" class="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition">Siguiente ▶</button>
     </div>
   </footer>
-  
-  <!-- NUEVO FOOTER - SERGIO RUIZ TORRES -->
-  <div class="w-full bg-slate-950 py-2 border-t border-slate-800 flex justify-center items-center z-50">
-    <span class="text-slate-500 font-mono text-xs tracking-widest uppercase">
-      Sergio Ruiz Torres
-    </span>
-  </div>
 
-  <!-- PANEL DESPLEGABLE: GUION DEL ORADOR & NOTAS TÉCNICAS -->
+  <!-- PANEL DE NOTAS -->
   <aside id="speakerNotesDrawer" class="fixed right-0 top-12 bottom-12 w-full max-w-md bg-slate-900/95 backdrop-blur-xl border-l border-slate-700 shadow-2xl p-6 z-40 transform translate-x-full transition-transform duration-300 flex flex-col text-slate-200">
     <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
-      <div class="flex items-center space-x-2">
-        <span class="text-xl">🎙️</span>
-        <h3 class="font-heading font-bold text-white text-base">Guion y Pauta del Orador</h3>
-      </div>
+      <h3 class="font-heading font-bold text-white text-base">🎙️ Guion y Pauta</h3>
       <button onclick="togglePresenterNotes()" class="text-slate-400 hover:text-white text-xl">✕</button>
-    </div>
-    <div class="flex items-center justify-between bg-slate-800/80 p-2.5 rounded-lg border border-slate-700 text-xs mb-4">
-      <span class="text-slate-400">Objetivo temporal lámina:</span>
-      <span id="noteTargetTime" class="font-mono font-semibold text-agri-lime">0:00 - 1:00 min</span>
     </div>
     <div class="flex-1 overflow-y-auto custom-scrollbar space-y-4 text-sm leading-relaxed">
       <div class="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-agri-emerald mb-1">Guion sugerido (Lectura natural):</h4>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-agri-emerald mb-1">Guion sugerido:</h4>
         <p id="noteScript" class="text-slate-300 italic font-sans"></p>
-      </div>
-      <div class="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-pucv-gold mb-1">Argumentos clave para profesores:</h4>
-        <ul id="noteKeyPoints" class="list-disc pl-4 text-xs space-y-1 text-slate-300"></ul>
       </div>
     </div>
   </aside>
 
-  <!-- MODAL: GRILLA DE VISTA GENERAL (OVERVIEW) -->
-  <div id="gridOverviewModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur z-50 p-8 hidden flex-col">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl font-heading font-bold text-white">Vista General de Diapositivas (MR1)</h2>
-      <button onclick="toggleGridOverview()" class="text-slate-400 hover:text-white text-2xl">✕</button>
-    </div>
-    <div id="gridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 overflow-y-auto flex-1 custom-scrollbar p-2">
-      <!-- Inyección de thumbnails -->
-    </div>
-  </div>
-
-  <!-- Archivo Script Externo -->
   <script src="script.js"></script>
 </body>
 </html>

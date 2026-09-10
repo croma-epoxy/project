@@ -1,4 +1,3 @@
-/* Aspect ratio 16:9 para diapositivas tipo Canva */
 .slide-container {
   aspect-ratio: 16 / 9;
   max-height: 88vh;
@@ -10,4 +9,46 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #CBD5E1;
   border-radius: 4px;
+}
+
+/* Formato formal de tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+th {
+  background-color: #0F2C59;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  padding: 0.5rem;
+  border: 1px solid #CBD5E1;
+  text-align: left;
+  font-size: 0.75rem;
+}
+td {
+  padding: 0.5rem;
+  border: 1px solid #E2E8F0;
+  font-size: 0.7rem;
+  color: #334155;
+}
+tr:nth-child(even) {
+  background-color: #F8FAFC;
+}
+
+/* Rúbrica LabSens: Título de tabla arriba, Título de figura abajo */
+.table-caption {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+.fig-caption {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748B;
+  margin-top: 0.5rem;
+  display: block;
+  text-align: center;
 }

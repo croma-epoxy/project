@@ -1,14 +1,8 @@
-// DEFINICIÓN RIGUROSA DE LAS 15 DIAPOSITIVAS Y GUIONES
 const slidesData = [
   {
     id: 1,
     title: "Portada Formal",
-    targetTime: "0:00 – 1:00 min",
-    script: "«Muy buenos días, profesor Daniel, profesor Juan. Presento ante ustedes la primera Mesa Redonda de mi proyecto de titulación: 'Sistema Ciberfísico Autónomo de Soporte Vital y Diagnóstico Fitosanitario en el Borde para Invernaderos de Precisión'. Este trabajo se enmarca en la línea de investigación del LabSens. Nuestro objetivo en esta sesión es justificar el replanteamiento arquitectónico frente al antecedente de 2025 y exponer los avances concretos ya programados en software, persistencia y visión computacional».",
-    keyPoints: [
-      "Mencionar explícitamente la filiación al LabSens/DY.",
-      "Establecer tono formal y seguro: enfoque de ingeniería ciberfísica aplicada."
-    ],
+    script: "Buenos días. Damos inicio a la Mesa Redonda 1. El objetivo principal es definir la integración de la IA en el hardware embebido (Raspberry Pi), comparar formalmente 3 alternativas de orquestación, y detallar cómo manejaremos el almacenamiento y la nube.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div class="flex justify-between items-start border-b border-slate-200 pb-4">
@@ -16,940 +10,333 @@ const slidesData = [
             <span class="text-xs font-bold uppercase tracking-widest text-pucv-blue">Pontificia Universidad Católica de Valparaíso</span>
             <h4 class="text-sm font-semibold text-slate-600">Escuela de Ingeniería Eléctrica • LabSens / DY</h4>
           </div>
-          <div class="text-right">
-            <span class="inline-block px-3 py-1 bg-pucv-navy text-white text-xs font-bold rounded-full">Mesa Redonda 1</span>
-          </div>
+          <span class="inline-block px-3 py-1 bg-pucv-navy text-white text-xs font-bold rounded-full">Mesa Redonda 1</span>
         </div>
-
         <div class="my-auto py-6">
-          <span class="inline-block px-3 py-1 bg-emerald-100 text-agri-green text-xs font-bold rounded mb-3 tracking-wide">
-            PROYECTO DE TITULACIÓN
-          </span>
-          <h1 class="font-heading font-extrabold text-3xl md:text-5xl text-pucv-navy leading-tight mb-4">
-            Sistema Ciberfísico Autónomo de Soporte Vital y Diagnóstico Fitosanitario en el Borde
-          </h1>
-          <p class="text-slate-600 text-base md:text-xl font-medium max-w-4xl">
-            Hacia una arquitectura en bucle cerrado desacoplada y tolerante a desconexión en Agricultura 4.0
-          </p>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-slate-200 pt-4 text-xs md:text-sm">
-          <div>
-            <span class="text-slate-400 block font-medium">Investigador:</span>
-            <span class="font-bold text-slate-800">Sergio Ruiz Torres</span>
-          </div>
-          <div>
-            <span class="text-slate-400 block font-medium">Profesor Guía:</span>
-            <span class="font-bold text-pucv-blue">Dr. Daniel Yunge</span>
-          </div>
-          <div>
-            <span class="text-slate-400 block font-medium">Profesor Correferente:</span>
-            <span class="font-bold text-pucv-blue">Dr. Juan Vignolo</span>
-          </div>
-          <div>
-            <span class="text-slate-400 block font-medium">Fecha:</span>
-            <span class="font-bold text-slate-800">Septiembre de 2026</span>
-          </div>
+          <span class="inline-block px-3 py-1 bg-emerald-100 text-agri-green text-xs font-bold rounded mb-3 tracking-wide">PROYECTO DE TITULACIÓN</span>
+          <h1 class="font-heading font-extrabold text-3xl md:text-5xl text-pucv-navy leading-tight mb-4">Arquitectura Ciberfísica para Invernaderos Autónomos</h1>
+          <p class="text-slate-600 text-base md:text-xl font-medium max-w-4xl">Evaluación de Alternativas, Edge AI y Sincronización ETL.</p>
         </div>
       </div>
     `
   },
   {
     id: 2,
-    title: "Resumen de Objetivos del Proyecto",
-    targetTime: "1:00 – 2:15 min",
-    script: "«Para mantener el rumbo del proyecto, visualizamos nuestro árbol de objetivos. El objetivo general busca dar un salto cuantitativo: pasar de un diagnóstico consultivo pasivo a un sistema ciberfísico que asume la gobernanza ejecutiva del cultivo. Como observan, se desglosa en 5 objetivos específicos correlacionados con cada Mesa Redonda. Hoy cumplimos el OE1: la justificación teórica, el análisis forense de antecedentes y el diseño de la persistencia local desacoplada».",
-    keyPoints: [
-      "Destacar el OE1 con borde verde (Hito actual cumplido al 100%).",
-      "Aclarar que cada OE tributa cronológicamente a cada MR semestral."
-    ],
+    title: "Estudio Comparativo (3 Alternativas)",
+    script: "Profesor, en respuesta a la metodología del LabSens, evaluamos 3 alternativas para orquestar la IA: n8n (antecedente 2025), Home Assistant (el estado del arte que me proporcionó) y nuestra propuesta híbrida en Python. Como se observa en la tabla, n8n consume demasiada RAM; Home Assistant es una caja negra que depende de internet para la IA; por descarte técnico y eficiencia energética (solo 5W), seleccionamos código nativo (Python/AsyncIO) en la Raspberry Pi.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Marco Metodológico LabSens</span>
-          <h2 class="font-heading font-extrabold text-2xl md:text-3xl text-pucv-navy mb-4">Árbol de Objetivos del Proyecto</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Metodología EIE: Análisis de Alternativas</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Evaluación del Orquestador y Cerebro de IA</h2>
         </div>
-
-        <div class="bg-blue-50/80 border-l-4 border-pucv-blue p-4 rounded-r-xl mb-4">
-          <span class="text-xs font-bold text-pucv-blue uppercase tracking-wider block">Objetivo General (OG)</span>
-          <p class="text-sm md:text-base font-semibold text-slate-800 leading-snug mt-1">
-            Desarrollar un sistema ciberfísico autónomo de soporte vital y diagnóstico foliar continuo en bucle cerrado sobre hardware embebido de bajo costo, garantizando la supervivencia del cultivo en entornos rurales o aislados con conectividad nula o intermitente.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-2.5">
-          <div class="p-3 rounded-xl border-2 border-agri-emerald bg-emerald-50/40 flex flex-col justify-between shadow-sm">
-            <span class="text-xs font-bold text-agri-green">OE1 (MR1 - En Curso)</span>
-            <p class="text-xs text-slate-700 mt-1">Arquitectura HW/SW, estudio comparativo de viabilidad y persistencia desacoplada.</p>
-            <span class="text-[10px] font-bold text-white bg-agri-emerald px-1.5 py-0.5 rounded self-start mt-2">FASE ACTUAL</span>
-          </div>
-          <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between opacity-80">
-            <span class="text-xs font-bold text-slate-600">OE2 (MR2)</span>
-            <p class="text-xs text-slate-600 mt-1">Etapa de potencia cableada con aislamiento galvánico y control determinista.</p>
-            <span class="text-[10px] font-bold text-slate-400 mt-2">Mes 2</span>
-          </div>
-          <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between opacity-80">
-            <span class="text-xs font-bold text-slate-600">OE3 (MR3)</span>
-            <p class="text-xs text-slate-600 mt-1">Visión computacional cuantizada en el borde (YOLOv8n / HSV) offline.</p>
-            <span class="text-[10px] font-bold text-slate-400 mt-2">Mes 3</span>
-          </div>
-          <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between opacity-80">
-            <span class="text-xs font-bold text-slate-600">OE4 (MR4)</span>
-            <p class="text-xs text-slate-600 mt-1">Orquestación Python (AsyncIO/LangGraph) y sync Store-and-Forward a nube.</p>
-            <span class="text-[10px] font-bold text-slate-400 mt-2">Mes 4</span>
-          </div>
-          <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between opacity-80">
-            <span class="text-xs font-bold text-slate-600">OE5 (MR5)</span>
-            <p class="text-xs text-slate-600 mt-1">Validación experimental continua en cultivo real y reporte final.</p>
-            <span class="text-[10px] font-bold text-slate-400 mt-2">Mes 5</span>
-          </div>
-        </div>
+        <!-- Rúbrica LabSens: Rótulo en la parte superior -->
+        <span class="table-caption">Tabla 1.1: Comparación técnica de 3 plataformas para el núcleo de control en la Raspberry Pi.</span>
+        <table>
+          <thead>
+            <tr>
+              <th>Criterio de Evaluación</th>
+              <th class="bg-slate-200 text-slate-800">1. n8n (Tesis 2025)</th>
+              <th class="bg-slate-200 text-slate-800">2. Home Assistant (Estado del Arte)</th>
+              <th class="bg-emerald-700 text-white border-emerald-800">3. Python Nativo / AsyncIO (Nuestra Propuesta)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Consumo RAM e I/O</strong></td>
+              <td class="text-red-600">Alto (~800MB) y desgasta la MicroSD con JSONs.</td>
+              <td class="text-amber-600">Medio/Alto (Requiere OS dedicado).</td>
+              <td class="font-bold text-agri-green bg-emerald-50">&lt; 70MB. Uso de RAM interna (tmpfs) protege la SD.</td>
+            </tr>
+            <tr>
+              <td><strong>Dependencia de Nube (IA)</strong></td>
+              <td class="text-red-600">Alta. Falla si cae la API de visión externa.</td>
+              <td class="text-red-600">Total (Ej. OpenAI GPT-4 Vision). Falla sin red.</td>
+              <td class="font-bold text-agri-green bg-emerald-50">100% Offline (Edge AI). Usa YOLOv8n local para decisiones físicas.</td>
+            </tr>
+            <tr>
+              <td><strong>Capacidad de Integración</strong></td>
+              <td class="text-slate-600">Excelente para APIs, mala para bucles cerrados.</td>
+              <td class="text-slate-600">Caja negra. Rígida para integrar lógica a bajo nivel.</td>
+              <td class="font-bold text-agri-green bg-emerald-50">Total. Control directo de relés optoacoplados en milisegundos.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     `
   },
   {
     id: 3,
-    title: "Planteamiento del Problema en Zonas Rurales",
-    targetTime: "2:15 – 3:30 min",
-    script: "«¿Cuál es el problema real al desplegar tecnología en el campo? La gran mayoría de los desarrollos IoT asumen una falacia: conectividad permanente y energía limpia de laboratorio. En la realidad rural, el internet se cae por horas o días. Si una helada ocurre a las 3 AM y el sistema depende de una API en la nube para prender la calefacción, la planta muere. Por otra parte, la literatura abunda en monitoreo pasivo que solo genera gráficos. La planta necesita acciones físicas automáticas para preservar su homeostasis biológica».",
-    keyPoints: [
-      "Contrastar 'Monitoreo Asistido' (pasivo) con 'Bucle Cerrado' (ejecutivo).",
-      "Citar el impacto de fallas de red en zonas rurales de la Región de Valparaíso."
-    ],
+    title: "Persistencia de Datos (Herramientas)",
+    script: "Respecto al almacenamiento y visualización, planteamos una solución robusta: SQLite como base de datos local resistente a desconexiones; Supabase en la nube para resguardo remoto, y Streamlit para el dashboard. Además, elegimos Telegram sobre WhatsApp porque es gratuito, asíncrono y sin riesgo de baneo.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Contexto Agrícola Real</span>
-          <h2 class="font-heading font-extrabold text-2xl md:text-3xl text-pucv-navy mb-2">Desafíos Críticos del Despliegue en Campo</h2>
-          <p class="text-slate-600 text-sm">La brecha entre los prototipos de laboratorio y las condiciones rurales de operación.</p>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Estudio de Herramientas Software</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Estrategia de Persistencia y Visualización</h2>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto">
-          <div class="p-5 bg-red-50/60 border-t-4 border-red-500 rounded-xl shadow-sm">
-            <div class="text-3xl mb-2">📡❌</div>
-            <h3 class="font-bold text-slate-800 text-base mb-1">Conectividad Intermitente</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Enlaces 4G/Wi-Fi inestables con latencias impredecibles. Los sistemas que delegan el control a la nube dejan a la planta desprotegida ante caídas de enlace.
-            </p>
-          </div>
-
-          <div class="p-5 bg-amber-50/60 border-t-4 border-pucv-gold rounded-xl shadow-sm">
-            <div class="text-3xl mb-2">⚡⚠️</div>
-            <h3 class="font-bold text-slate-800 text-base mb-1">Entorno Eléctrico Hostil</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Microcortes, fluctuaciones y presencia de cargas inductivas reales (bombas de 12V, extractores y calefactores de 220V) que introducen picos de ruido que queman la electrónica.
-            </p>
-          </div>
-
-          <div class="p-5 bg-blue-50/60 border-t-4 border-pucv-blue rounded-xl shadow-sm">
-            <div class="text-3xl mb-2">⏳⚠️</div>
-            <h3 class="font-bold text-slate-800 text-base mb-1">Falla del Monitoreo Pasivo</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Sistemas comerciales que solo notifican al teléfono transfieren el riesgo al humano. Si el operador duerme o no tiene señal, el cultivo perece por helada o estrés hídrico.
-            </p>
-          </div>
-        </div>
-
-        <div class="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs text-center text-slate-700">
-          <strong>Solución Requerida:</strong> Un sistema local en bucle cerrado (<em>Closed-Loop</em>) con autonomía de decisión ejecutiva en el borde (<em>Edge</em>).
-        </div>
+        <!-- Rúbrica LabSens: Rótulo en la parte superior -->
+        <span class="table-caption">Tabla 1.2: Selección fundamentada de software de capa superior.</span>
+        <table>
+          <thead>
+            <tr>
+              <th>Requerimiento</th>
+              <th>Herramienta Seleccionada</th>
+              <th>Justificación Técnica y de Costos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Base de Datos Local</strong></td>
+              <td><strong>SQLite (modo WAL)</strong></td>
+              <td>Transaccional, nativa en Python, cero dependencias de red. Protege la MicroSD.</td>
+            </tr>
+            <tr>
+              <td><strong>Base de Datos Nube</strong></td>
+              <td><strong>Supabase (PostgreSQL)</strong></td>
+              <td>Permite inserciones idempotentes (Upsert antiduplicados) en lote. Plan gratuito.</td>
+            </tr>
+            <tr>
+              <td><strong>Dashboard (Visualización)</strong></td>
+              <td><strong>Streamlit</strong></td>
+              <td>Despliegue dual: En red local (sin internet) y despliegue público gratuito.</td>
+            </tr>
+            <tr>
+              <td><strong>Notificaciones IA</strong></td>
+              <td><strong>Telegram Bot API</strong></td>
+              <td>100% gratuito, maneja imágenes fácilmente, sin riesgo de baneo (vs WhatsApp).</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     `
   },
   {
     id: 4,
-    title: "Antecedente Inmediato (Memoria Irene Reche, 2025)",
-    targetTime: "3:30 – 5:00 min",
-    script: "«Nuestro punto de partida es la memoria desarrollada el año 2025 por Irene Reche en esta escuela. Tuvo aciertos notables: validar que el cruce del triángulo epidemiológico con visión multimodal es viable. No obstante, el informe documenta con total honestidad cuellos de botella severos: el orquestador n8n consumía hasta 1 GB de RAM, la asincronía obligaba a crear archivos JSON temporales que destruyen la MicroSD, el Wi-Fi del ESP32 perdía su IP con reinicios del router y LLaVA local colapsó la VRAM. Nuestro deber ingenieril es resolver estas 4 limitantes».",
-    keyPoints: [
-      "Reconocer los aciertos conceptuales de Irene (honestidad intelectual).",
-      "Exponer los 4 cuellos de botella documentados con precisión técnica."
-    ],
+    title: "Arquitectura General en 3 Capas",
+    script: "Diseñamos una arquitectura en 3 capas. Capa 1: planta física con relés optoacoplados para aislar el ruido. Capa 2: cerebro Raspberry Pi, operando 100% offline con IA en el borde. Capa 3: nube asíncrona, usada solo cuando hay internet para sincronizar.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Análisis Forense de Antecedentes EIE</span>
-          <h2 class="font-heading font-extrabold text-2xl md:text-3xl text-pucv-navy mb-2">Evaluación Crítica: Trabajo Previo (Reche, 2025)</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Diseño de Ingeniería</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Arquitectura Híbrida Desacoplada</h2>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
-          <!-- Aciertos -->
-          <div class="p-4 bg-emerald-50/50 border border-agri-emerald/40 rounded-xl">
-            <div class="flex items-center space-x-2 text-agri-green font-bold text-sm mb-2">
-              <span>✅</span>
-              <span>Aciertos Conceptuales a Rescatar</span>
-            </div>
-            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4">
-              <li><strong>Triángulo Epidemiológico:</strong> Cruce formal de huésped, patógeno y microclima para inferir riesgo biológico.</li>
-              <li><strong>Diagnóstico Visual Fitosanitario:</strong> Demostración de que la inspección foliar aporta alto valor diagnóstico.</li>
-              <li><strong>Canal de Alertas por Telegram:</strong> Uso de mensajería ligera sin fricción para el usuario.</li>
-            </ul>
+        
+        <div class="space-y-4 my-auto">
+          <div class="p-3 border-l-4 border-red-500 bg-red-50 rounded-r">
+            <h4 class="font-bold text-xs text-red-700">CAPA 1: PLANTA Y POTENCIA FÍSICA (HW)</h4>
+            <p class="text-[11px] text-slate-700">Sensores I2C/USB. <strong>Aislamiento Galvánico:</strong> Relés optoacoplados separan cargas inductivas (bomba 12V, luz 220V) de la placa lógica.(En evaluacion tecnica)</p>
           </div>
-
-          <!-- Cuellos de botella -->
-          <div class="p-4 bg-red-50/50 border border-red-300 rounded-xl">
-            <div class="flex items-center space-x-2 text-red-600 font-bold text-sm mb-2">
-              <span>⚠️</span>
-              <span>Cuellos de Botella Documentados en Informe</span>
-            </div>
-            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4">
-              <li><strong>Orquestador n8n (Node.js):</strong> Consumo excesivo de RAM (400 MB a 1 GB), inviable para correr en placa reducida.</li>
-              <li><strong>Degradación Flash:</strong> Escritura continua de archivos <code>.json</code> temporales en disco para sincronizar nodos.</li>
-              <li><strong>Inestabilidad Wi-Fi (ESP32):</strong> Caídas de webhook por reasignación de IP dinámica vía DHCP tras reinicios de router.</li>
-              <li><strong>Colapso de VRAM:</strong> Inviabilidad técnica de ejecutar LLMs locales (LLaVA/Ollama) en placas embebidas.</li>
-            </ul>
+          <div class="p-3 border-l-4 border-agri-emerald bg-emerald-50 rounded-r">
+            <h4 class="font-bold text-xs text-agri-green">CAPA 2: EDGE AUTONOMY (RASPBERRY PI - OFFLINE)</h4>
+            <p class="text-[11px] text-slate-700">Orquestación nativa en <strong>Python</strong>. Inferencia visual con <strong>YOLOv8n</strong> en CPU. Base <strong>SQLite local</strong> soportada por buffers en RAM (tmpfs).</p>
+          </div>
+          <div class="p-3 border-l-4 border-blue-500 bg-blue-50 rounded-r">
+            <h4 class="font-bold text-xs text-blue-700">CAPA 3: NUBE OPORTUNISTA (ONLINE)</h4>
+            <p class="text-[11px] text-slate-700">Proceso ETL "Store-and-Forward". Al detectar red, envía lotes a <strong>Supabase</strong> (sin duplicados) y actualiza <strong>Streamlit Cloud</strong>.</p>
           </div>
         </div>
-
-        <p class="text-center text-xs font-semibold text-pucv-blue">
-          El presente proyecto asume el compromiso de rediseñar la arquitectura para superar estos cuatro puntos críticos.
-        </p>
+        <!-- Rúbrica LabSens: Rótulo en la parte inferior -->
+        <span class="fig-caption">Figura 1.1: Esquema de separación de responsabilidades en 3 capas.</span>
       </div>
     `
   },
   {
     id: 5,
-    title: "Metodologías Analizadas: Orquestación e Inferencia",
-    targetTime: "5:00 – 6:30 min",
-    script: "«En la Tabla 1.1 contrastamos rigurosamente las alternativas. El uso de n8n o de modelos multimodales monolíticos en local demostró ser inviable para hardware accesible como la Raspberry Pi 4. Por ello, seleccionamos una arquitectura basada en Python nativo concurrente con AsyncIO y un clasificador neuronal ligero: YOLOv8n optimizado a 8 bits. Como observan en las métricas, reducimos el consumo de memoria a menos de 70 MB y aseguramos tiempos de inferencia inferiores a 150 milisegundos sin consumir ciclos de lectura/escritura en la tarjeta física».",
-    keyPoints: [
-      "Resaltar la norma LabSens: Rótulo de tabla en la parte superior.",
-      "Defender la métrica: < 70 MB de RAM y latencia determinista."
-    ],
+    title: "Estrategia Antiduplicados (ETL)",
+    script: "Para asegurar que los datos no se dupliquen al recuperar la red, implementamos un proceso ETL con el método Upsert, basándonos en el timestamp, ignorando conflictos y marcando los registros locales como sincronizados.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Estudio Comparativo Formal</span>
-          <span class="text-xs text-slate-500 block font-semibold mb-1">Tabla 1.1: Comparación técnica de alternativas de orquestación y visión</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-3">Orquestación de Software e Inferencia de IA</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Persistencia</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Pipeline de Datos (Store & Forward)</h2>
         </div>
-
-        <div class="overflow-x-auto my-auto">
-          <table class="w-full text-left text-xs border-collapse border border-slate-200">
-            <thead>
-              <tr class="bg-pucv-navy text-white font-heading">
-                <th class="p-2.5 border border-slate-300">Criterio de Selección</th>
-                <th class="p-2.5 border border-slate-300">n8n (Node.js) [Reche, 2025]</th>
-                <th class="p-2.5 border border-slate-300">Edge Monolítico (LLaVA / Ollama)</th>
-                <th class="p-2.5 border border-slate-300 bg-emerald-800">Propuesta Híbrida (Python + YOLOv8n)</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-700">
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Consumo de Memoria RAM</td>
-                <td class="p-2.5 border border-slate-200 text-red-600 font-mono">400 MB – 1.000 MB</td>
-                <td class="p-2.5 border border-slate-200 text-red-600 font-mono">> 3.500 MB (Colapso VRAM)</td>
-                <td class="p-2.5 border border-slate-200 font-mono font-bold text-agri-green bg-emerald-50/50">&lt; 70 MB (Procesos base)</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Latencia de Decisión</td>
-                <td class="p-2.5 border border-slate-200 font-mono">1.000 ms – 5.000 ms</td>
-                <td class="p-2.5 border border-slate-200 font-mono text-red-600">&gt; 60.000 ms / token</td>
-                <td class="p-2.5 border border-slate-200 font-mono font-bold text-agri-green bg-emerald-50/50">&lt; 150 ms (Tiempo real)</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Operación Offline</td>
-                <td class="p-2.5 border border-slate-200">Parcial (falla sin APIs)</td>
-                <td class="p-2.5 border border-slate-200">100% Offline (inestable)</td>
-                <td class="p-2.5 border border-slate-200 font-bold text-agri-green bg-emerald-50/50">100% Autónoma en el borde</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Desgaste I/O Almacenamiento</td>
-                <td class="p-2.5 border border-slate-200 text-red-600">Alto (JSONs en MicroSD)</td>
-                <td class="p-2.5 border border-slate-200">Medio</td>
-                <td class="p-2.5 border border-slate-200 font-bold text-agri-green bg-emerald-50/50">Nulo en estado normal (tmpfs)</td>
-              </tr>
-              <tr class="bg-slate-100 font-semibold">
-                <td class="p-2.5 border border-slate-200">Veredicto Metodológico</td>
-                <td class="p-2.5 border border-slate-200 text-red-700">Descartado por huella RAM</td>
-                <td class="p-2.5 border border-slate-200 text-red-700">Descartado por inviabilidad SoC</td>
-                <td class="p-2.5 border border-slate-200 text-agri-green font-bold bg-emerald-100/60">SELECCIONADO PARA EL PROYECTO</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="text-[11px] text-slate-500 italic text-right">
-          Datos obtenidos a partir del ensayo de ejecución en Raspberry Pi 4 Model B (4 GB RAM).
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-auto">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+            <h3 class="font-bold text-pucv-navy text-sm mb-2">1. Estrategia Antiduplicados (ETL)</h3>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li>En SQLite local, los registros tienen la bandera: <code class="bg-slate-200 px-1 rounded">sinc = 0</code>.</li>
+              <li>Al detectar internet, se envía a Supabase usando <strong>Upsert</strong> (INSERT ... ON CONFLICT DO NOTHING) basado en <em>Timestamp</em>.</li>
+              <li>Si la API responde HTTP 200, se marca localmente <code class="bg-slate-200 px-1 rounded">sinc = 1</code>.</li>
+            </ul>
+          </div>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+            <h3 class="font-bold text-pucv-navy text-sm mb-2">2. Despliegue Dual de Streamlit</h3>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li><strong>Modo Local:</strong> La RPi emite WiFi (Access Point). Acceso leyendo de SQLite sin requerir internet.</li>
+              <li><strong>Modo Cloud:</strong> Streamlit Community Cloud lee desde Supabase el último volcado.</li>
+            </ul>
+          </div>
         </div>
       </div>
     `
   },
   {
     id: 6,
-    title: "Metodologías Analizadas: Persistencia y Telemetría",
-    targetTime: "6:30 – 7:45 min",
-    script: "«En cuanto a los datos, la experiencia previa demostró que Notion es una libreta de notas, no una base de datos para telemetría industrial; arrojaba errores silenciosos ante inconsistencias de tipo. En nuestra arquitectura separamos formalmente la persistencia en dos niveles: localmente, SQLite con registro por adelantado (WAL) y soporte de RAM (tmpfs); remotamente, una sincronización asíncrona Store-and-Forward hacia Supabase (PostgreSQL), la cual alimenta un panel reactivo en Streamlit sin duplicar jamás un registro temporal».",
-    keyPoints: [
-      "Explicar Store-and-Forward como patrón formal de ingeniería.",
-      "Mencionar la protección contra desgaste de MicroSD mediante SQLite WAL."
-    ],
+    title: "Dashboard Implementado",
+    script: "Aquí presentamos el prototipo del panel en Streamlit. Muestra telemetría y el diagnóstico foliar procesado en local, demostrando la autonomía del sistema en el borde.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Estudio Comparativo Formal</span>
-          <span class="text-xs text-slate-500 block font-semibold mb-1">Tabla 1.2: Comparativa de sistemas de almacenamiento y reporte</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-3">Persistencia de Datos y Canal de Reportes</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Evidencia de Desarrollo</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Panel de Supervisión (Streamlit)</h2>
         </div>
-
-        <div class="overflow-x-auto my-auto">
-          <table class="w-full text-left text-xs border-collapse border border-slate-200">
-            <thead>
-              <tr class="bg-pucv-navy text-white font-heading">
-                <th class="p-2.5 border border-slate-300">Dimensión</th>
-                <th class="p-2.5 border border-slate-300">Solución Anterior (Reche, 2025)</th>
-                <th class="p-2.5 border border-slate-300 bg-emerald-800">Propuesta Seleccionada</th>
-                <th class="p-2.5 border border-slate-300">Justificación Técnica</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-700">
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Base de Datos Local</td>
-                <td class="p-2.5 border border-slate-200 text-red-600">Inexistente (JSONs volátiles)</td>
-                <td class="p-2.5 border border-slate-200 font-bold text-agri-green bg-emerald-50/50">SQLite (WAL) + tmpfs en RAM</td>
-                <td class="p-2.5 border border-slate-200">Transacciones atómicas ACID; cero ciclos de I/O en disco durante lecturas normales.</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Persistencia Cloud</td>
-                <td class="p-2.5 border border-slate-200 text-red-600">Base de datos Notion</td>
-                <td class="p-2.5 border border-slate-200 font-bold text-agri-green bg-emerald-50/50">Supabase (PostgreSQL)</td>
-                <td class="p-2.5 border border-slate-200">Consultas estructuradas, alta tasa de ingesta, idempotencia (Upsert) y sin costo.</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Panel de Control</td>
-                <td class="p-2.5 border border-slate-200">HTML estático por navegador</td>
-                <td class="p-2.5 border border-slate-200 font-bold text-agri-green bg-emerald-50/50">Streamlit Local + Cloud</td>
-                <td class="p-2.5 border border-slate-200">UI reactiva en Python; opera en red LAN local sin internet y se replica en nube.</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold border border-slate-200">Alertas a Usuario</td>
-                <td class="p-2.5 border border-slate-200">Telegram Bot API</td>
-                <td class="p-2.5 border border-slate-200 font-bold text-agri-green bg-emerald-50/50">Telegram Bot API (Enriquecido)</td>
-                <td class="p-2.5 border border-slate-200">Mensajería asíncrona gratuita, sin costo por token ni riesgo de baneo (vs WhatsApp).</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="my-auto w-full flex justify-center bg-slate-50 border border-slate-200 rounded-lg p-2">
+          <!-- Debes tener "image_322113.jpg" en la misma carpeta que el HTML -->
+          <img src="image_322113.jpg" alt="Dashboard Streamlit" class="max-h-[50vh] object-contain rounded">
         </div>
-
-        <div class="bg-blue-50/70 p-3 rounded-lg border border-pucv-blue/20 flex items-center justify-between text-xs text-slate-700">
-          <span class="font-bold text-pucv-blue">Patrón Seleccionado:</span>
-          <span>SQLite Local (Transaccional) ➔ Store & Forward (Demonio ETL) ➔ Supabase (Historial Cloud)</span>
-        </div>
+        <!-- Rúbrica LabSens: Rótulo en la parte inferior -->
+        <p class="fig-caption">Figura 1.2: Panel reactivo mostrando variables climáticas y diagnóstico foliar procesado en local.</p>
       </div>
     `
   },
   {
     id: 7,
-    title: "Arquitectura General del Sistema Ciberfísico",
-    targetTime: "7:45 – 9:30 min",
-    script: "«En la Figura 1.1 observamos el corazón de la propuesta: una arquitectura ciberfísica en tres niveles desacoplados. A nivel físico, eliminamos el router Wi-Fi: todos los sensores ingresan cableados a la Raspberry Pi. Para las cargas reales, incorporamos una etapa de potencia con aislamiento galvánico por optoacopladores y masas desacopladas, lo que blinda la electrónica de control contra el ruido inductivo de la bomba y la lámpara calefactora. A nivel embebido, el orquestador nativo en Python gestiona concurrentemente la lectura, el análisis de imagen en la RAM y la actuación. Solo si la placa detecta conexión exterior, se abre el canal asíncrono hacia la nube. Si no hay internet, el bucle jamás se interrumpe y la planta continúa con vida».",
-    keyPoints: [
-      "Diagrama UML/SysML formal requerido por rúbrica LabSens.",
-      "Rótulo de figura en la parte inferior."
-    ],
+    title: "Próximos Pasos",
+    script: "Nuestros próximos pasos de cara a la Mesa Redonda 2 son afinar el entorno Linux en la Raspberry, ensamblar el aislamiento de los relés optoacoplados, y someter la sonda a variaciones para evaluar tiempos de respuesta.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Solución Propuesta (MR1)</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Arquitectura Jerárquica en Bucle Cerrado</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Planificación (Mesa Redonda 2)</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Próximas Tareas y Banco de Pruebas</h2>
         </div>
-
-        <!-- Diagrama SVG Profesional de 3 Capas -->
-        <div class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 my-auto flex items-center justify-center">
-          <svg viewBox="0 0 950 360" class="w-full h-auto max-h-[46vh]">
-            <!-- CAPA 1: FÍSICA Y POTENCIA -->
-            <rect x="20" y="20" width="910" height="95" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4"/>
-            <text x="35" y="42" font-family="Montserrat" font-size="11" font-weight="bold" fill="#0F2C59">CAPA 1: PLANTA FÍSICA, SENSORIZACIÓN CABLEADA Y ETAPA DE POTENCIA AISLADA</text>
-            
-            <!-- Bloques Capa 1 -->
-            <rect x="40" y="55" width="160" height="48" rx="6" fill="#FFFFFF" stroke="#0F2C59" stroke-width="1.5"/>
-            <text x="120" y="76" font-family="Inter" font-size="10" font-weight="bold" fill="#0F2C59" text-anchor="middle">Sensores Cableados</text>
-            <text x="120" y="90" font-family="Inter" font-size="9" fill="#64748B" text-anchor="middle">SHT15 (I2C) + Humedad Suelo</text>
-
-            <rect x="220" y="55" width="140" height="48" rx="6" fill="#FFFFFF" stroke="#0F2C59" stroke-width="1.5"/>
-            <text x="290" y="76" font-family="Inter" font-size="10" font-weight="bold" fill="#0F2C59" text-anchor="middle">Cámara Óptica</text>
-            <text x="290" y="90" font-family="Inter" font-size="9" fill="#64748B" text-anchor="middle">USB / CSI (Foliar)</text>
-
-            <rect x="620" y="55" width="290" height="48" rx="6" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
-            <text x="765" y="75" font-family="Inter" font-size="10" font-weight="bold" fill="#DC2626" text-anchor="middle">Etapa de Potencia con Optoacopladores</text>
-            <text x="765" y="90" font-family="Inter" font-size="9" fill="#7F1D1D" text-anchor="middle">Luz Pollito 220V | Bomba Riego 12V | Ventilador DC</text>
-
-            <!-- CAPA 2: CONTROL DETERMINISTA Y EDGE AI -->
-            <rect x="20" y="130" width="910" height="120" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
-            <text x="35" y="152" font-family="Montserrat" font-size="11" font-weight="bold" fill="#15803D">CAPA 2: NÚCLEO LOCAL DE DECISIÓN Y SUPERVIVENCIA EN EL BORDE (RASPBERRY PI 4 - OFFLINE)</text>
-
-            <rect x="40" y="165" width="240" height="70" rx="6" fill="#FFFFFF" stroke="#15803D" stroke-width="1.5"/>
-            <text x="160" y="188" font-family="Inter" font-size="10" font-weight="bold" fill="#15803D" text-anchor="middle">Orquestador Concurrente</text>
-            <text x="160" y="204" font-family="Inter" font-size="9" fill="#334155" text-anchor="middle">Python nativo (AsyncIO / LangGraph)</text>
-            <text x="160" y="218" font-family="Inter" font-size="9" fill="#64748B" text-anchor="middle">Latencia determinista &lt; 20 ms</text>
-
-            <rect x="300" y="165" width="240" height="70" rx="6" fill="#FFFFFF" stroke="#15803D" stroke-width="1.5"/>
-            <text x="420" y="188" font-family="Inter" font-size="10" font-weight="bold" fill="#15803D" text-anchor="middle">Edge AI & Triángulo Epidemiológico</text>
-            <text x="420" y="204" font-family="Inter" font-size="9" fill="#334155" text-anchor="middle">YOLOv8n (INT8) + Inferencia Local</text>
-            <text x="420" y="218" font-family="Inter" font-size="9" fill="#64748B" text-anchor="middle">Búfer en RAM nativa (tmpfs)</text>
-
-            <rect x="560" y="165" width="180" height="70" rx="6" fill="#FFFFFF" stroke="#15803D" stroke-width="1.5"/>
-            <text x="650" y="188" font-family="Inter" font-size="10" font-weight="bold" fill="#15803D" text-anchor="middle">Base Relacional Local</text>
-            <text x="650" y="204" font-family="Inter" font-size="9" fill="#334155" text-anchor="middle">SQLite en modo WAL</text>
-            <text x="650" y="218" font-family="Inter" font-size="9" fill="#64748B" text-anchor="middle">flag sincronizado = 0 / 1</text>
-
-            <rect x="760" y="165" width="150" height="70" rx="6" fill="#FFFFFF" stroke="#15803D" stroke-width="1.5"/>
-            <text x="835" y="188" font-family="Inter" font-size="10" font-weight="bold" fill="#15803D" text-anchor="middle">UI Local Reactiva</text>
-            <text x="835" y="204" font-family="Inter" font-size="9" fill="#334155" text-anchor="middle">Streamlit Local</text>
-            <text x="835" y="218" font-family="Inter" font-size="9" fill="#64748B" text-anchor="middle">Vía Access Point LAN</text>
-
-            <!-- CAPA 3: SINCRONIZACIÓN Y NUBE -->
-            <rect x="20" y="265" width="910" height="75" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4"/>
-            <text x="35" y="285" font-family="Montserrat" font-size="11" font-weight="bold" fill="#1E3A8A">CAPA 3: SUPERVISIÓN ASÍNCRONA Y NUBE OPORTUNISTA (STORE & FORWARD)</text>
-
-            <rect x="180" y="295" width="220" height="35" rx="4" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1"/>
-            <text x="290" y="316" font-family="Inter" font-size="9.5" font-weight="bold" fill="#1E3A8A" text-anchor="middle">Demonio ETL Store & Forward</text>
-
-            <rect x="430" y="295" width="200" height="35" rx="4" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1"/>
-            <text x="530" y="316" font-family="Inter" font-size="9.5" font-weight="bold" fill="#1E3A8A" text-anchor="middle">Supabase (PostgreSQL Cloud)</text>
-
-            <rect x="660" y="295" width="220" height="35" rx="4" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1"/>
-            <text x="770" y="316" font-family="Inter" font-size="9.5" font-weight="bold" fill="#1E3A8A" text-anchor="middle">Telegram Bot / Gemini Cloud</text>
-
-            <!-- Flechas Conectoras -->
-            <path d="M 120 103 L 120 165" stroke="#0F2C59" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-            <path d="M 290 103 L 340 165" stroke="#0F2C59" stroke-width="1.5" fill="none"/>
-            <path d="M 280 200 L 300 200" stroke="#15803D" stroke-width="1.5" fill="none"/>
-            <path d="M 540 200 L 560 200" stroke="#15803D" stroke-width="1.5" fill="none"/>
-            <path d="M 740 200 L 760 200" stroke="#15803D" stroke-width="1.5" fill="none"/>
-            <path d="M 480 165 L 700 103" stroke="#DC2626" stroke-width="1.5" fill="none"/>
-            <path d="M 650 235 L 290 295" stroke="#3B82F6" stroke-width="1.5" fill="none"/>
-          </svg>
-        </div>
-
-        <div class="text-[11px] text-slate-500 font-semibold text-center border-t border-slate-200 pt-2">
-          Figura 1.1: Diagrama de bloques funcional de la arquitectura jerárquica en bucle cerrado. [Fuente: Elaboración propia, 2026]
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-auto">
+          <div class="bg-white border border-slate-200 p-4 rounded-lg shadow-sm">
+            <span class="text-2xl mb-2 block">🖥️</span>
+            <h3 class="font-bold text-sm text-pucv-navy">1. Entorno Base RPi</h3>
+            <p class="text-[11px] text-slate-600 mt-1">Configuración Linux, RAM volátil (tmpfs), inicializar SQLite y script AsyncIO en Python.</p>
+          </div>
+          <div class="bg-white border border-slate-200 p-4 rounded-lg shadow-sm">
+            <span class="text-2xl mb-2 block">🔌</span>
+            <h3 class="font-bold text-sm text-pucv-navy">2. Integración Física</h3>
+            <p class="text-[11px] text-slate-600 mt-1">Ensamblar aislamiento optoacoplado. Conectar sensores y validar lecturas deterministas sin Wi-Fi.</p>
+          </div>
+          <div class="bg-white border border-slate-200 p-4 rounded-lg shadow-sm">
+            <span class="text-2xl mb-2 block">🌡️</span>
+            <h3 class="font-bold text-sm text-pucv-navy">3. Simulación Ambiental</h3>
+            <p class="text-[11px] text-slate-600 mt-1">Someter sonda a variaciones térmicas para evaluar los tiempos de respuesta del código y relés.</p>
+          </div>
         </div>
       </div>
     `
   },
   {
     id: 8,
-    title: "Inteligencia Artificial Híbrida y Modelo Decisional",
-    targetTime: "9:30 – 11:00 min",
-    script: "«Un punto crucial a defender es: ¿dónde está la inteligencia artificial y por qué no es un automatismo tradicional? En un control clásico, las reglas son fijas: si la temperatura sube de 28 grados, ventila. En nuestro sistema, la red neuronal YOLOv8n clasifica la presencia de un hongo en menos de 150 ms. Al cruzar esto con la base de datos de la variedad y la humedad ambiental mediante el Triángulo Epidemiológico, el agente concluye que existe riesgo de esporulación. Por ende, la IA reescribe de forma adaptativa los umbrales de control: fuerza ventilación temprana a 24 grados y suspende preventivamente el riego. No necesitamos internet para razonar; la nube de Gemini se reserva como asesor de segundo nivel».",
-    keyPoints: [
-      "Fórmula matemática del Triángulo Epidemiológico.",
-      "Explicar la diferencia entre 'automatismo if-else' y 'reescritura adaptativa de consignas'."
-    ],
+    title: "Conclusiones de Etapa",
+    script: "Para cerrar, concluimos que tras comparar rigurosamente 3 alternativas, resolvimos teóricamente la dependencia de red y sobrecarga de memoria del trabajo anterior, estableciendo un diseño robusto y de bajo consumo.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Núcleo Decisional Adaptativo</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">IA Local en el Borde vs. IA Consultiva en la Nube</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Resumen Ejecutivo</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Conclusiones de la Mesa Redonda 1</h2>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
-          <!-- Nivel Borde -->
-          <div class="p-4 bg-emerald-50/70 border-2 border-agri-emerald rounded-xl">
-            <div class="flex items-center justify-between mb-2">
-              <span class="font-heading font-bold text-agri-green text-sm">1. Nivel Local: Edge AI Determinista</span>
-              <span class="text-[10px] bg-agri-emerald text-white font-bold px-2 py-0.5 rounded">OFFLINE</span>
-            </div>
-            <p class="text-xs text-slate-700 mb-2">
-              Inferencia visual con <strong>YOLOv8n-cls (INT8)</strong> en CPU de Raspberry Pi (&lt; 150 ms, dataset <em>PlantVillage</em>).
-            </p>
-            <div class="bg-white p-2.5 rounded border border-emerald-200 text-center font-mono text-[11px] text-slate-800 mb-2">
-              Riesgo = f(Huésped, Patógeno, Microclima)
-            </div>
-            <div class="text-xs text-slate-600 space-y-1">
-              <strong>Reescritura Dinámica de Umbrales:</strong>
-              <p class="text-[11px] italic bg-emerald-100/50 p-2 rounded">
-                «Si se detecta espora fúngica + Humedad &gt; 75% ➔ Baja consigna de ventilación de 28°C a 24°C y restringe ciclos de riego para frenar germinación».
-              </p>
-            </div>
+        
+        <div class="space-y-4 my-auto">
+          <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-agri-green font-bold">✔️</span>
+            <p class="text-xs text-slate-700"><strong>Evaluación Rigurosa:</strong> Se descartó n8n y Home Assistant, justificando mediante métricas (RAM, red, energía) la adopción de Python nativo.</p>
           </div>
-
-          <!-- Nivel Cloud -->
-          <div class="p-4 bg-blue-50/70 border border-pucv-blue/30 rounded-xl">
-            <div class="flex items-center justify-between mb-2">
-              <span class="font-heading font-bold text-pucv-blue text-sm">2. Nivel Nube: Razonamiento Contextual</span>
-              <span class="text-[10px] bg-pucv-blue text-white font-bold px-2 py-0.5 rounded">ONLINE / OPORTUNISTA</span>
-            </div>
-            <p class="text-xs text-slate-700 mb-2">
-              Invocación asíncrona a <strong>Gemini 1.5 / 2.5 Flash</strong> al detectar ventana de red celular o Wi-Fi.
-            </p>
-            <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4 mt-3">
-              <li><strong>Asesor Fitosanitario de 2° Nivel:</strong> Corrobora el diagnóstico preliminar de la red neuronal del borde.</li>
-              <li><strong>Prescripción Biológica:</strong> Recomienda tratamientos orgánicos específicos (ej. <em>Bacillus subtilis</em>).</li>
-              <li><strong>Síntesis en Lenguaje Natural:</strong> Redacta informes claros y ejecutivos dirigidos al bot de Telegram.</li>
-            </ul>
+          <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-agri-green font-bold">✔️</span>
+            <p class="text-xs text-slate-700"><strong>Bucle Cerrado en el Borde:</strong> Supervivencia de la planta 100% independiente de la nube (Edge Autonomy).</p>
           </div>
-        </div>
-
-        <div class="bg-slate-100 p-2.5 rounded-lg border border-slate-200 text-center text-xs text-slate-700">
-          <strong>Conclusión Técnica:</strong> El soporte vital nunca se detiene por caídas de internet; la nube solo enriquece el reporte agronómico.
+          <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-agri-green font-bold">✔️</span>
+            <p class="text-xs text-slate-700"><strong>Gestión de Datos:</strong> Diseño de pipeline ETL local (SQLite) a Supabase, evitando duplicados con patrón Store-and-Forward.</p>
+          </div>
         </div>
       </div>
     `
   },
   {
     id: 9,
-    title: "Consideraciones de Hardware y Protección Eléctrica",
-    targetTime: "11:00 – 12:15 min",
-    script: "«En el informe previo se documentó que algunas fuentes USB reiniciaban el sistema al encender actuadores. Como futuros ingenieros civiles electrónicos, abordamos la etapa de potencia con rigor. Diseñamos líneas de alimentación desacopladas: la Raspberry Pi cuenta con una fuente regulada exclusiva, mientras que los motores de 12V y la lámpara calefactora de 220V son comandados por relés optoacoplados con protección flyback contra fuerza contraelectromotriz. Asimismo, mitigamos la fatiga del almacenamiento montando los búferes de imagen en la memoria RAM nativa (tmpfs), protegiendo la tarjeta MicroSD contra escrituras innecesarias».",
-    keyPoints: [
-      "Explicar el aislamiento galvánico para evitar ruido eléctrico inductivo.",
-      "Detallar el uso de tmpfs en la RAM interna de la placa."
-    ],
+    title: "Referencias Bibliográficas",
+    script: "Finalmente, presento las referencias que sustentan esta investigación, incluyendo la tesis antecedente y la pauta de evaluación. Muchas gracias, quedo atento a sus consultas.",
     render: () => `
       <div class="flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Ingeniería Electrónica y Confiabilidad</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Acondicionamiento de Señal y Aislamiento de Potencia</h2>
+          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Sustento Teórico</span>
+          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Referencias Bibliográficas</h2>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-auto">
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <div class="text-2xl mb-2">⚡🔀</div>
-            <h3 class="font-bold text-slate-800 text-sm mb-1">Aislamiento Galvánico</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Módulos de relés optoacoplados que aíslan eléctricamente las señales lógicas de 3.3V de la Raspberry Pi de los picos inductivos de conmutación.
-            </p>
+        
+        <!-- Rúbrica LabSens: Formato MLA para Google Scholar -->
+        <div class="space-y-3 text-[11px] text-slate-700 my-auto">
+          <div class="p-2 border border-slate-200 bg-slate-50 rounded">
+            <strong>[1]</strong> Reche Bernal, Irene y Daniel Yunge. <em>Diseño e Implementación de un Sistema de Diagnóstico Agrícola Automatizado mediante IA Generativa y Sensores IoT.</em> Memoria de Titulación, Escuela de Ingeniería Eléctrica, PUCV, 2025.
           </div>
-
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <div class="text-2xl mb-2">🔋🔌</div>
-            <h3 class="font-bold text-slate-800 text-sm mb-1">Fuentes Desacopladas</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Fuente regulada dedicada de 5V 3A exclusiva para la placa de cómputo, separada de la línea de 12V DC (bomba/fan) y 220V AC (luz pollito).
-            </p>
+          <div class="p-2 border border-slate-200 bg-slate-50 rounded">
+            <strong>[2]</strong> Aubury, Simon. "Can AI Take Care of My Plant (Because I Can’t)?" <em>Medium</em>, 2024.
           </div>
-
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <div class="text-2xl mb-2">💾🛡️</div>
-            <h3 class="font-bold text-slate-800 text-sm mb-1">Protección MicroSD (RAM)</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Sistema de archivos montado en la RAM interna (<code>tmpfs</code>) para análisis visual volátil; SQLite en modo <code>WAL</code> previene corrupción flash.
-            </p>
+          <div class="p-2 border border-slate-200 bg-slate-50 rounded">
+            <strong>[3]</strong> Yunge, Daniel y Juan Vignolo. <em>Modelo de Desarrollo de Proyecto de Titulación LabSens.</em> Documento interno EIE, PUCV, 2025.
           </div>
         </div>
-
-        <div class="bg-amber-50 border border-amber-200 p-3 rounded-lg flex items-center justify-between text-xs text-amber-900">
-          <span><strong>Resguardo Físico:</strong> Diodos de libre circulación (<em>flyback</em>) en bombas DC y filtros snubber/varistores en cargas 220V.</span>
-          <span class="font-mono text-amber-700 font-bold">LabSens EIE</span>
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 10,
-    title: "Avances Concretos Desarrollados (Evidencias de Trabajo)",
-    targetTime: "12:15 – 13:45 min",
-    script: "«En concordancia con la rúbrica de evaluación respecto a la cantidad de trabajo y evidencia tangible, en la Figura 1.2 exhibimos los avances ya construidos durante este primer mes. Disponemos del esquema de base de datos relacional inicializado y probado; implementamos el pipeline ETL antiduplicados con idempotencia para Supabase; tenemos operativo el panel de control reactivo en Streamlit para inspección local y remota; y contamos con el módulo de visión preliminar en OpenCV que cuantifica la degradación foliar en milisegundos. No nos quedamos en la teoría: el núcleo computacional está programado y listo».",
-    keyPoints: [
-      "Mostrar evidencia de software funcionando (criterio 'Cantidad de trabajo').",
-      "Resaltar que el código base está terminado y operativo."
-    ],
-    render: () => `
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-agri-green">Evidencias Tangibles (Mes 1)</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Hitos de Software y Datos Implementados a la Fecha</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-auto">
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <span class="text-xs font-bold text-pucv-navy block">1. Esquema Relacional SQLite (Local)</span>
-            <p class="text-[11px] text-slate-600">
-              Tablas creadas: <code>telemetria</code>, <code>actuadores_log</code>, <code>diagnosticos</code> y flags booleanos de sincronización con claves primarias indexadas.
-            </p>
-            <div class="font-mono text-[10px] bg-slate-900 text-emerald-400 p-2 rounded">
-              CREATE TABLE IF NOT EXISTS telemetria (<br>
-              &nbsp;&nbsp;id INTEGER PRIMARY KEY, timestamp DATETIME,<br>
-              &nbsp;&nbsp;temp REAL, hum_amb REAL, sinc INTEGER DEFAULT 0<br>
-              );
-            </div>
-          </div>
-
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <span class="text-xs font-bold text-pucv-navy block">2. Pipeline ETL Antiduplicados (Store & Forward)</span>
-            <p class="text-[11px] text-slate-600">
-              Script de sincronización idempotente hacia Supabase con política <code>ON CONFLICT DO NOTHING</code> y compresión semántica por lotes (batching).
-            </p>
-            <div class="font-mono text-[10px] bg-slate-900 text-blue-300 p-2 rounded">
-              sync_daemon: ping 8.8.8.8 OK ➔ 200 registros<br>
-              POST https://supabase.co/rest/v1/telemetria<br>
-              Status 201 Created ➔ sinc flag = 1
-            </div>
-          </div>
-
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <span class="text-xs font-bold text-pucv-navy block">3. Dashboard Local de Supervisión (Streamlit)</span>
-            <p class="text-[11px] text-slate-600">
-              Interfaz reactiva con curvas bioclimáticas de alto contraste, bitácora de intervenciones del agente y descarga de reportes técnicos Markdown.
-            </p>
-          </div>
-
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <span class="text-xs font-bold text-pucv-navy block">4. Algoritmo de Visión Preliminar (OpenCV)</span>
-            <p class="text-[11px] text-slate-600">
-              Segmentación cromática en espacios HSV/Lab para cuantificación porcentual de necrosis y clorosis foliar en milisegundos en la CPU.
-            </p>
-          </div>
-        </div>
-
-        <div class="text-[11px] text-slate-500 font-semibold text-center border-t border-slate-200 pt-2">
-          Figura 1.2: Evidencias de implementación del entorno de control, persistencia relacional y visualización. [Fuente: LabSens, 2026]
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 11,
-    title: "Plan de Trabajo y Cronograma (Carta Gantt Semestral)",
-    targetTime: "13:45 – 14:45 min",
-    script: "«Nuestra planificación temporal se estructura rigurosamente en base a los 5 hitos de Mesas Redondas de la Escuela. Concluido este primer mes, cerramos exitosamente la MR1 habiendo definido la arquitectura, comparado las tecnologías y validado los algoritmos base. La Carta Gantt contempla para la MR2 el montaje físico de la etapa de potencia y el cableado sensorial, garantizando que para la MR3 la red neuronal clasifique hojas sobre el cultivo y finalicemos en la MR5 con una semana completa de validación experimental ininterrumpida».",
-    keyPoints: [
-      "Cumplimiento formal de la pauta: Carta Gantt detallada.",
-      "Indicar claramente que la MR1 está al 100% de cumplimiento."
-    ],
-    render: () => `
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Metodología y Planificación Temporal</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Carta Gantt del Proyecto (Semanas 1 a 16)</h2>
-        </div>
-
-        <!-- Gráfico Visual Gantt -->
-        <div class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 my-auto">
-          <div class="space-y-3 text-xs">
-            <!-- Header semanas -->
-            <div class="grid grid-cols-12 gap-1 text-[10px] font-bold text-slate-400 text-center pb-1 border-b border-slate-200">
-              <div class="col-span-4 text-left pl-2">Hito / Etapa Metodológica</div>
-              <div class="col-span-2">S1 - S4 (MR1)</div>
-              <div class="col-span-2">S5 - S8 (MR2)</div>
-              <div class="col-span-2">S9 - S12 (MR3/4)</div>
-              <div class="col-span-2">S13 - S16 (MR5)</div>
-            </div>
-
-            <!-- MR1 -->
-            <div class="grid grid-cols-12 gap-1 items-center">
-              <div class="col-span-4 text-xs font-bold text-pucv-navy">MR1: Estado del arte y arquitectura</div>
-              <div class="col-span-2 bg-agri-emerald text-white text-[10px] font-bold py-1.5 px-2 rounded text-center shadow-sm">100% (Completado)</div>
-              <div class="col-span-6 bg-slate-200/50 h-3 rounded"></div>
-            </div>
-
-            <!-- MR2 -->
-            <div class="grid grid-cols-12 gap-1 items-center">
-              <div class="col-span-4 text-xs font-medium text-slate-700">MR2: Etapa de potencia y sensores cableados</div>
-              <div class="col-span-2"></div>
-              <div class="col-span-2 bg-pucv-blue text-white text-[10px] font-bold py-1.5 px-2 rounded text-center">Fase Siguiente</div>
-              <div class="col-span-4 bg-slate-200/50 h-3 rounded"></div>
-            </div>
-
-            <!-- MR3 -->
-            <div class="grid grid-cols-12 gap-1 items-center">
-              <div class="col-span-4 text-xs font-medium text-slate-700">MR3: Edge AI (YOLOv8n) y visión en placa</div>
-              <div class="col-span-4"></div>
-              <div class="col-span-2 bg-slate-400 text-white text-[10px] font-bold py-1 px-2 rounded text-center">Planificado</div>
-              <div class="col-span-2 bg-slate-200/50 h-3 rounded"></div>
-            </div>
-
-            <!-- MR4 -->
-            <div class="grid grid-cols-12 gap-1 items-center">
-              <div class="col-span-4 text-xs font-medium text-slate-700">MR4: Sync Supabase y Bot Telegram</div>
-              <div class="col-span-4"></div>
-              <div class="col-span-2 bg-slate-400 text-white text-[10px] font-bold py-1 px-2 rounded text-center">Planificado</div>
-              <div class="col-span-2 bg-slate-200/50 h-3 rounded"></div>
-            </div>
-
-            <!-- MR5 -->
-            <div class="grid grid-cols-12 gap-1 items-center">
-              <div class="col-span-4 text-xs font-bold text-slate-800">MR5: Ensayo continuo 7 días e Informe Final</div>
-              <div class="col-span-6"></div>
-              <div class="col-span-2 bg-pucv-navy text-white text-[10px] font-bold py-1.5 px-2 rounded text-center">Entrega Final</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-emerald-50 border border-agri-emerald/30 p-2.5 rounded-lg text-xs text-agri-green font-medium flex justify-between items-center">
-          <span><strong>Estado del Cronograma:</strong> Cumplimiento estricto dentro de los plazos reglamentarios del LabSens.</span>
-          <span class="font-bold">Semana 4 / 16</span>
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 12,
-    title: "Resumen Ejecutivo (Key Takeaways)",
-    targetTime: "14:45 – 15:45 min",
-    script: "«Para sintetizar los puntos esenciales de esta primera mesa: Primero, transformamos el sistema en un bucle cerrado autónomo donde la IA interviene activamente las variables del invernadero; segundo, descentralizamos la inteligencia, ejecutando redes neuronales cuantizadas en el borde sin requerir internet; tercero, diseñamos un sistema de datos robusto que cuida el hardware físico y tolera semanas de aislamiento; y cuarto, lo logramos bajo un esquema de bajo costo, reproducible y de grado ingenieril».",
-    keyPoints: [
-      "Exponer las 4 conclusiones clave con impacto y síntesis.",
-      "Demostrar dominio técnico y capacidad de resumen."
-    ],
-    render: () => `
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Síntesis de la Propuesta</span>
-          <h2 class="font-heading font-extrabold text-2xl md:text-3xl text-pucv-navy mb-2">Puntos Centrales de la Propuesta (Key Takeaways)</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-auto">
-          <div class="p-4 bg-blue-50/80 border-l-4 border-pucv-blue rounded-r-xl">
-            <span class="text-xs font-bold text-pucv-blue uppercase tracking-wider block">1. Bucle Cerrado Real</span>
-            <p class="text-xs text-slate-700 mt-1">
-              La IA deja de ser un asesor consultivo pasivo y asume la gobernanza ejecutiva del soporte vital (riego, calefacción y ventilación).
-            </p>
-          </div>
-
-          <div class="p-4 bg-emerald-50/80 border-l-4 border-agri-emerald rounded-r-xl">
-            <span class="text-xs font-bold text-agri-green uppercase tracking-wider block">2. Inferencia Local en el Borde</span>
-            <p class="text-xs text-slate-700 mt-1">
-              Clasificación foliar en CPU mediante YOLOv8n (INT8) en &lt; 150 ms, erradicando la dependencia de servidores en la nube para mantener viva la planta.
-            </p>
-          </div>
-
-          <div class="p-4 bg-amber-50/80 border-l-4 border-pucv-gold rounded-r-xl">
-            <span class="text-xs font-bold text-amber-800 uppercase tracking-wider block">3. Tolerancia a Desconexión Rural</span>
-            <p class="text-xs text-slate-700 mt-1">
-              Arquitectura <em>Store-and-Forward</em> con SQLite local en modo WAL y búferes en RAM (<code>tmpfs</code>), protegiendo la tarjeta MicroSD.
-            </p>
-          </div>
-
-          <div class="p-4 bg-slate-100 border-l-4 border-slate-600 rounded-r-xl">
-            <span class="text-xs font-bold text-slate-800 uppercase tracking-wider block">4. Ingeniería Accesible</span>
-            <p class="text-xs text-slate-700 mt-1">
-              Plataforma 100% basada en software libre y componentes comerciales de bajo costo con aislamiento galvánico industrial.
-            </p>
-          </div>
-        </div>
-
-        <div class="text-center text-xs font-semibold text-slate-500 italic">
-          «Determinismo local para la supervivencia, inteligencia adaptativa para la prevención y nube bajo demanda».
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 13,
-    title: "Conclusiones de la Mesa Redonda 1",
-    targetTime: "15:45 – 16:30 min",
-    script: "«En conclusión, damos por cumplido en su totalidad el Objetivo Específico 1 asignado a esta primera Mesa Redonda. No solo hemos respondido a los vacíos técnicos identificados en el estado del arte y en los antecedentes de la escuela, sino que hemos establecido las bases matemáticas, lógicas y circuitales para iniciar de inmediato el acondicionamiento físico de la etapa de potencia. El sistema cuenta con una ruta metodológica sólida y evidencias de software verificables para avanzar hacia la MR2».",
-    keyPoints: [
-      "Vincular las conclusiones directamente con el OE1.",
-      "Cerrar con tono de seguridad metodológica."
-    ],
-    render: () => `
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Evaluación de Etapa</span>
-          <h2 class="font-heading font-extrabold text-2xl md:text-3xl text-pucv-navy mb-2">Conclusiones y Cumplimiento del Hito (MR1)</h2>
-        </div>
-
-        <div class="space-y-3 my-auto">
-          <div class="flex items-start space-x-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="text-lg text-agri-green">✔️</span>
-            <p class="text-xs text-slate-700">
-              <strong>Identificación de Fallos Previos:</strong> Se documentaron formalmente las causas de inestabilidad del trabajo de 2025 (sobrecarga de RAM en n8n, desgaste flash por JSONs y fragilidad Wi-Fi), justificando técnicamente la nueva arquitectura.
-            </p>
-          </div>
-
-          <div class="flex items-start space-x-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="text-lg text-agri-green">✔️</span>
-            <p class="text-xs text-slate-700">
-              <strong>Definición Arquitectónica:</strong> Se modeló el sistema jerárquico en 3 niveles desacoplados con aislamiento galvánico y soporte en memoria RAM nativa (<code>tmpfs</code>).
-            </p>
-          </div>
-
-          <div class="flex items-start space-x-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="text-lg text-agri-green">✔️</span>
-            <p class="text-xs text-slate-700">
-              <strong>Entorno Base Operativo:</strong> Se programó y validó el esquema SQLite local, el pipeline ETL antiduplicados y el dashboard en Streamlit, satisfaciendo los requerimientos del OE1.
-            </p>
-          </div>
-        </div>
-
-        <div class="bg-emerald-100/70 border border-agri-emerald p-3 rounded-xl flex items-center justify-between text-agri-green font-bold text-xs md:text-sm">
-          <span>Veredicto de la Mesa: Objetivo Específico 1 Cumplido al 100%</span>
-          <span class="bg-agri-emerald text-white px-2 py-0.5 rounded text-xs">Habilitado para MR2</span>
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 14,
-    title: "Referencias Bibliográficas Formales",
-    targetTime: "16:30 – 17:00 min",
-    script: "«En la lámina final se presentan las referencias bibliográficas que sustentan teóricamente cada afirmación de este trabajo, destacando el informe base de la memorista Irene Reche, los tratados fitopatológicos de Agrios para el triángulo epidemiológico y la literatura de visión en el borde. Con esto concluyo mi exposición, agradeciendo su atención y quedando a plena disposición de la comisión para la ronda de preguntas y comentarios técnicos».",
-    keyPoints: [
-      "Cumplimiento de norma LabSens: formato MLA/IEEE de Google Scholar.",
-      "Citar autores formales del antecedente: alumna y profesor guía."
-    ],
-    render: () => `
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-pucv-blue">Sustento Bibliográfico Formal</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy mb-2">Referencias Bibliográficas (IEEE / MLA)</h2>
-        </div>
-
-        <div class="space-y-2 text-xs text-slate-700 my-auto">
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded">
-            <strong>[1] Reche Bernal, Irene y Yunge, Daniel.</strong> <em>Diseño e Implementación de un Sistema de Diagnóstico Agrícola Automatizado mediante IA Generativa y Sensores IoT</em>. Memoria de Titulación, Escuela de Ingeniería Eléctrica, PUCV, 2025.
-          </div>
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded">
-            <strong>[2] Agrios, George N.</strong> <em>Plant Pathology</em>. 5th ed., Academic Press, 2005. (Fundamento teórico del Triángulo Epidemiológico).
-          </div>
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded">
-            <strong>[3] Jocher, Glenn, et al.</strong> <em>Ultralytics YOLOv8: A State-of-the-Art Real-Time Object Detection and Classification Model</em>. GitHub repository, 2023.
-          </div>
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded">
-            <strong>[4] Hughes, David P., and Salathé, Marcel.</strong> «An open access repository of images on plant health to enable the development of mobile disease diagnostics.» <em>arXiv:1511.08060</em>, 2015 (Dataset PlantVillage).
-          </div>
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded">
-            <strong>[5] Yunge, Daniel y Vignolo, Juan.</strong> <em>Modelo de Desarrollo de Proyecto de Titulación LabSens/DY</em>. Escuela de Ingeniería Eléctrica, PUCV, 2025.
-          </div>
-        </div>
-
-        <div class="text-center text-xs font-bold text-pucv-blue">
-          ¡Muchas gracias por su atención! • Inicio de la Ronda de Preguntas
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 15,
-    title: "Diapositiva de Respaldo / Preguntas (Backup)",
-    targetTime: "Ronda de Consultas",
-    script: "«Lámina de respaldo visible durante las preguntas de la comisión: resume el diagrama de aislamiento con optoacoplador y la arquitectura de comandos de voz offline mediante Vosk/Whisper.cpp».",
-    keyPoints: [
-      "Tener a la vista las respuestas para preguntas sobre aislamiento y voz offline.",
-      "Demostrar previsión ante posibles dudas técnicas profundas."
-    ],
-    render: () => `
-      <div class="flex-1 flex flex-col justify-between">
-        <div class="border-b border-slate-200 pb-2">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Lámina de Respaldo Técnico</span>
-          <h2 class="font-heading font-extrabold text-2xl text-pucv-navy">Ronda de Preguntas y Discusión Técnica</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-auto">
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <h3 class="font-bold text-pucv-blue text-xs uppercase tracking-wider mb-2">Esquema Eléctrico de Aislamiento</h3>
-            <div class="text-[11px] text-slate-700 space-y-1">
-              <p>• <strong>Control:</strong> 3.3V GPIO ➔ Resistencia 220Ω ➔ Ánodo LED Optoacoplador (PC817 / 4N35).</p>
-              <p>• <strong>Separación:</strong> Cero continuidad galvánica entre masa lógica (RPi) y masa de potencia (GND 12V).</p>
-              <p>• <strong>Carga AC (220V):</strong> Varistor MOV (275V) + Snubber RC (100Ω / 0.1μF) en paralelo con contactos de relé.</p>
-            </div>
-          </div>
-
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <h3 class="font-bold text-pucv-blue text-xs uppercase tracking-wider mb-2">Pipeline de Voz Offline (Vosk / Piper)</h3>
-            <div class="text-[11px] text-slate-700 space-y-1">
-              <p>• <strong>STT (Speech-to-Text):</strong> Motor <strong>Vosk</strong> en español (&lt; 45 MB modelo, &lt; 5% CPU en Raspberry Pi).</p>
-              <p>• <strong>Intent Parser:</strong> Expresiones regulares o modelo semántico liviano para órdenes directas (riego/ventilación).</p>
-              <p>• <strong>TTS (Text-to-Speech):</strong> Motor local <strong>Piper</strong> para retroalimentación hablada al agricultor sin internet.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-blue-50 border border-pucv-blue/20 p-2.5 rounded text-center text-xs text-pucv-blue font-medium">
-          Comisión Evaluadora: Dr. Daniel Yunge • Dr. Juan Vignolo — Escuela de Ingeniería Eléctrica PUCV
-        </div>
+        <div class="text-center font-bold text-pucv-blue text-sm mt-4">Inicio de Ronda de Preguntas</div>
       </div>
     `
   }
 ];
 
-// ESTADO DE LA APLICACIÓN
 let currentSlideIndex = 0;
 let timerSeconds = 0;
 let timerInterval = null;
 let isTimerRunning = false;
 
-// INICIALIZACIÓN
-function initPresentation() {
-  renderSlide(currentSlideIndex);
-  setupGridOverview();
-  updateNavControls();
-  setupKeyboardShortcuts();
-}
-
-// RENDERIZADO DE DIAPOSITIVA
 function renderSlide(index) {
-  if (index < 0 || index >= slidesData.length) return;
-  currentSlideIndex = index;
   const slide = slidesData[index];
-
-  const contentContainer = document.getElementById('slideContent');
-  contentContainer.innerHTML = slide.render();
-
-  // Actualizar metadatos
+  document.getElementById('slideContent').innerHTML = slide.render();
   document.getElementById('slideNumberBadge').textContent = slide.id;
-  document.getElementById('navCurrentSlide').textContent = slide.id;
+  document.getElementById('navCurrentSlide').textContent = index + 1;
   document.getElementById('navTotalSlides').textContent = slidesData.length;
-  document.getElementById('currentSlideTitle').textContent = `${slide.id}. ${slide.title}`;
-
-  // Actualizar Notas del Orador
-  document.getElementById('noteTargetTime').textContent = slide.targetTime;
+  document.getElementById('currentSlideTitle').textContent = slide.title;
   document.getElementById('noteScript').textContent = slide.script;
-
-  const keyPointsList = document.getElementById('noteKeyPoints');
-  keyPointsList.innerHTML = '';
-  slide.keyPoints.forEach(pt => {
-    const li = document.createElement('li');
-    li.textContent = pt;
-    keyPointsList.appendChild(li);
-  });
-
-  updateNavControls();
 }
 
-// NAVEGACIÓN
 function nextSlide() {
   if (currentSlideIndex < slidesData.length - 1) {
-    renderSlide(currentSlideIndex + 1);
+    currentSlideIndex++;
+    renderSlide(currentSlideIndex);
   }
 }
 
 function prevSlide() {
   if (currentSlideIndex > 0) {
-    renderSlide(currentSlideIndex - 1);
+    currentSlideIndex--;
+    renderSlide(currentSlideIndex);
   }
 }
 
-function updateNavControls() {
-  // Estado botones
+function togglePresenterNotes() {
+  document.getElementById('speakerNotesDrawer').classList.toggle('translate-x-full');
 }
 
-// TECLADO
-function setupKeyboardShortcuts() {
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
-      nextSlide();
-    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-      prevSlide();
-    } else if (e.key.toLowerCase() === 'p') {
-      togglePresenterNotes();
-    } else if (e.key.toLowerCase() === 'o') {
-      toggleGridOverview();
-    } else if (e.key.toLowerCase() === 'f') {
-      toggleFullscreen();
-    }
-  });
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+  }
 }
 
-// TEMPORIZADOR
 function toggleTimer() {
   const btn = document.getElementById('btnTimerToggle');
   if (isTimerRunning) {
     clearInterval(timerInterval);
     isTimerRunning = false;
     btn.textContent = 'Reanudar';
-    btn.classList.replace('bg-amber-600', 'bg-slate-800');
+    btn.classList.replace('bg-agri-alert', 'bg-slate-800');
   } else {
     isTimerRunning = true;
     btn.textContent = 'Pausar';
-    btn.classList.replace('bg-slate-800', 'bg-amber-600');
+    btn.classList.replace('bg-slate-800', 'bg-agri-alert');
     timerInterval = setInterval(() => {
       timerSeconds++;
-      updateTimerDisplay();
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('timerDisplay').textContent = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }, 1000);
   }
 }
@@ -958,71 +345,14 @@ function resetTimer() {
   clearInterval(timerInterval);
   isTimerRunning = false;
   timerSeconds = 0;
+  document.getElementById('timerDisplay').textContent = '00:00';
   document.getElementById('btnTimerToggle').textContent = 'Iniciar';
-  document.getElementById('btnTimerToggle').classList.replace('bg-amber-600', 'bg-slate-800');
-  updateTimerDisplay();
+  document.getElementById('btnTimerToggle').classList.replace('bg-agri-alert', 'bg-slate-800');
 }
 
-function updateTimerDisplay() {
-  const mins = Math.floor(timerSeconds / 60);
-  const secs = timerSeconds % 60;
-  const display = document.getElementById('timerDisplay');
-  display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
 
-  // Semáforo de Tiempo LabSens (15 - 20 min)
-  if (mins < 15) {
-    display.className = "font-mono font-bold text-base text-agri-emerald";
-  } else if (mins >= 15 && mins <= 18) {
-    display.className = "font-mono font-bold text-base text-pucv-gold animate-pulse";
-  } else {
-    display.className = "font-mono font-bold text-base text-red-500 animate-bounce";
-  }
-}
-
-// PANTALLA COMPLETA
-function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(err => console.log(err));
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
-  }
-}
-
-// PANEL DE NOTAS
-function togglePresenterNotes() {
-  const drawer = document.getElementById('speakerNotesDrawer');
-  drawer.classList.toggle('translate-x-full');
-}
-
-// GRILLA DE VISTA GENERAL
-function toggleGridOverview() {
-  const modal = document.getElementById('gridOverviewModal');
-  modal.classList.toggle('hidden');
-  modal.classList.toggle('flex');
-}
-
-function setupGridOverview() {
-  const grid = document.getElementById('gridContainer');
-  grid.innerHTML = '';
-  slidesData.forEach((slide, index) => {
-    const card = document.createElement('div');
-    card.className = "bg-slate-800 hover:bg-slate-700 p-3 rounded-lg border border-slate-700 cursor-pointer flex flex-col justify-between transition h-28";
-    card.onclick = () => {
-      renderSlide(index);
-      toggleGridOverview();
-    };
-    card.innerHTML = `
-      <div class="flex justify-between items-start">
-        <span class="text-xs font-bold text-agri-emerald">N° ${slide.id}</span>
-        <span class="text-[10px] text-slate-400 font-mono">${slide.targetTime.split('–')[0]}</span>
-      </div>
-      <span class="text-xs font-semibold text-slate-200 line-clamp-2">${slide.title}</span>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-// Inicio al cargar
-window.onload = initPresentation;
+window.onload = () => renderSlide(0);
