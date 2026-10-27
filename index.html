@@ -1,90 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Presentación MR1 - Invernadero Autónomo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            pucv: { navy: '#0F2C59', blue: '#1E3A8A', gold: '#D97706', light: '#F8FAFC' },
-            agri: { green: '#15803D', emerald: '#10B981', lime: '#84CC16', alert: '#DC2626' }
-          },
-          fontFamily: {
-            heading: ['Montserrat', 'sans-serif'],
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10251f">
+  <meta name="description" content="Panel IoT para monitoreo de precisión del invernadero Labsens PUCV.">
+  <title>Invernadero IoT Labsens PUCV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
-<body class="bg-slate-900 text-slate-800 font-sans min-h-screen flex flex-col items-center justify-between overflow-x-hidden select-none">
-
-  <!-- BARRA SUPERIOR -->
-  <header class="w-full bg-slate-950/80 backdrop-blur border-b border-slate-800 px-6 py-2 flex items-center justify-between z-50 text-white text-xs md:text-sm">
-    <div class="flex items-center space-x-3">
-      <span class="inline-block w-3 h-3 rounded-full bg-agri-emerald animate-pulse"></span>
-      <span class="font-heading font-bold tracking-wide text-slate-200">PUCV • EIE • LabSens</span>
-      <span class="text-slate-500">|</span>
-      <span class="text-slate-400 font-mono hidden md:inline">MR1: Arquitectura, Persistencia y Dashboard</span>
-    </div>
-    <div class="flex items-center space-x-4 bg-slate-900 px-4 py-1 rounded-full border border-slate-700">
-      <span class="text-slate-400 text-xs">Tiempo:</span>
-      <span id="timerDisplay" class="font-mono font-bold text-base text-agri-emerald">00:00</span>
-      <button onclick="toggleTimer()" id="btnTimerToggle" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">Iniciar</button>
-      <button onclick="resetTimer()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded">Reset</button>
-    </div>
-    <div class="flex items-center space-x-3">
-      <button onclick="togglePresenterNotes()" class="px-3 py-1 bg-pucv-blue hover:bg-blue-800 rounded font-medium transition text-xs">🎙️ Guion Orador</button>
-      <button onclick="toggleFullscreen()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-medium transition text-xs">⛶ Pantalla Completa</button>
-    </div>
-  </header>
-
-  <!-- LIENZO PRINCIPAL -->
-  <main class="flex-1 w-full max-w-7xl p-4 flex items-center justify-center relative">
-    <div id="slideViewport" class="slide-container w-full bg-white rounded-2xl relative flex flex-col justify-between overflow-hidden border border-slate-200 transition-all duration-300">
-      <div id="slideContent" class="w-full h-full p-8 md:p-10 flex flex-col justify-between overflow-y-auto custom-scrollbar"></div>
-      
-      <!-- Regla LabSens: Número en extremo inferior derecho -->
-      <div class="absolute bottom-4 right-8 font-heading font-bold text-slate-400 text-sm md:text-base tracking-widest pointer-events-none">
-        <span id="slideNumberBadge">1</span>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="Labsens PUCV, inicio">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span><b>LABSENS</b><small>PUCV · AGRICULTURA 4.0</small></span>
+      </a>
+      <div class="workspace-label">ESPACIO DE TRABAJO</div>
+      <nav class="nav-menu" aria-label="Navegación principal">
+        <a class="nav-link active" href="#home" data-page="home"><span class="nav-icon">◫</span> Home</a>
+        <a class="nav-link" href="#analytics" data-page="analytics"><span class="nav-icon">⌁</span> Analytics</a>
+        <a class="nav-link" href="#tutorial" data-page="tutorial"><span class="nav-icon">▤</span> Tutorial</a>
+        <a class="nav-link" href="#historial" data-page="historial"><span class="nav-icon">◷</span> Historial</a>
+        <a class="nav-link" href="#configuraciones" data-page="configuraciones"><span class="nav-icon">⚙</span> Configuraciones</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="connection-card">
+        <div class="connection-top"><span class="status-dot" id="sidebarDot"></span><span id="sidebarConnection">Simulación activa</span></div>
+        <p>Raspberry Pi 4 B</p><small>Modbus RTU · RS485</small>
+        <div class="connection-line"><span></span></div>
+        <div class="connection-foot"><span>EDGE NODE</span><b id="sidebarLatency">8 ms</b></div>
       </div>
-    </div>
-  </main>
+      <div class="sidebar-footer"><span class="avatar">L</span><span><b>Labsens PUCV</b><small>Invernadero experimental</small></span><span class="more">•••</span></div>
+    </aside>
 
-  <!-- BARRA INFERIOR -->
-  <footer class="w-full bg-slate-950/80 backdrop-blur border-t border-slate-800 px-6 py-2.5 flex items-center justify-between text-white text-xs md:text-sm">
-    <div class="text-slate-400 flex items-center space-x-2">
-      <span id="currentSlideTitle" class="text-slate-300 font-medium truncate max-w-xs">Portada Formal</span>
-    </div>
-    <div class="flex items-center space-x-4">
-      <button onclick="prevSlide()" class="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition">◀ Anterior</button>
-      <span class="font-mono text-slate-300 font-bold px-2"><span id="navCurrentSlide">1</span> / <span id="navTotalSlides">9</span></span>
-      <button onclick="nextSlide()" class="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition">Siguiente ▶</button>
-    </div>
-  </footer>
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button>
+        <div class="breadcrumbs"><span>Labsens PUCV</span><i>/</i><b id="pageCrumb">Overview</b></div>
+        <div class="topbar-actions">
+          <span class="live-pill"><span class="pulse-dot"></span><span id="liveLabel">LIVE SIMULATION</span></span>
+          <button class="icon-button" id="notificationBtn" aria-label="Ver alertas">♧<span class="notification-count" id="notificationCount">2</span></button>
+          <div class="top-date"><span class="date-icon">◷</span><span id="todayLabel">Actualizando fecha…</span></div>
+        </div>
+      </header>
 
-  <!-- PANEL DE NOTAS -->
-  <aside id="speakerNotesDrawer" class="fixed right-0 top-12 bottom-12 w-full max-w-md bg-slate-900/95 backdrop-blur-xl border-l border-slate-700 shadow-2xl p-6 z-40 transform translate-x-full transition-transform duration-300 flex flex-col text-slate-200">
-    <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
-      <h3 class="font-heading font-bold text-white text-base">🎙️ Guion y Pauta</h3>
-      <button onclick="togglePresenterNotes()" class="text-slate-400 hover:text-white text-xl">✕</button>
-    </div>
-    <div class="flex-1 overflow-y-auto custom-scrollbar space-y-4 text-sm leading-relaxed">
-      <div class="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-agri-emerald mb-1">Guion sugerido:</h4>
-        <p id="noteScript" class="text-slate-300 italic font-sans"></p>
-      </div>
-    </div>
-  </aside>
+      <section class="page-section active" id="page-home">
+        <div class="hero">
+          <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1800&q=85" alt="" class="hero-image" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1800&q=85'">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div class="eyebrow"><span class="eyebrow-line"></span> PRECISION AGRICULTURE · PUCV</div>
+            <h1>Un ecosistema más<br><em>inteligente y vivo.</em></h1>
+            <p>Monitoreo ambiental en tiempo real para entender, anticipar y optimizar el desarrollo de tus cultivos.</p>
+            <a class="hero-cta" href="#analytics">Explorar analítica <span>↗</span></a>
+          </div>
+          <div class="hero-caption"><span class="caption-dot"></span> INVERNADERO EXPERIMENTAL <span class="caption-separator">/</span> NODO 01</div>
+          <div class="hero-glass-note"><span class="note-icon">✳</span><span><b>Microclima bajo control</b><small>Datos ambientales consolidados</small></span></div>
+        </div>
 
-  <script src="script.js"></script>
+        <div class="section-heading">
+          <div><div class="eyebrow dark-eyebrow">MONITOREO EN VIVO</div><h2>Resumen ambiental <span class="heading-spark">✳</span></h2><p>Lecturas del último ciclo de adquisición del invernadero.</p></div>
+          <div class="updated-label"><span class="pulse-dot"></span> Actualizado <b id="lastUpdated">ahora</b></div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card kpi-temp">
+            <div class="kpi-top"><span class="kpi-icon">☼</span><span class="trend positive" id="tempTrend">↗ 0.4%</span></div>
+            <div class="kpi-label">Temperatura del aire</div>
+            <div class="kpi-value"><span id="tempValue">25.4</span><small>°C</small></div>
+            <div class="kpi-foot"><span class="range-dot green"></span> Zona objetivo 22–28 °C</div>
+            <div class="sparkline"><canvas id="sparkTemp" aria-label="Tendencia de temperatura"></canvas></div>
+          </article>
+          <article class="kpi-card kpi-humidity">
+            <div class="kpi-top"><span class="kpi-icon">◌</span><span class="trend neutral" id="humTrend">→ estable</span></div>
+            <div class="kpi-label">Humedad relativa</div>
+            <div class="kpi-value"><span id="humValue">68.2</span><small>%</small></div>
+            <div class="kpi-foot"><span class="range-dot green"></span> Zona objetivo 60–80 %</div>
+            <div class="sparkline"><canvas id="sparkHum" aria-label="Tendencia de humedad"></canvas></div>
+          </article>
+          <article class="kpi-card kpi-vpd">
+            <div class="kpi-top"><span class="kpi-icon">◈</span><span class="trend positive" id="vpdTrend">✓ óptimo</span></div>
+            <div class="kpi-label">Déficit de presión de vapor</div>
+            <div class="kpi-value"><span id="vpdValue">0.92</span><small>kPa</small></div>
+            <div class="kpi-foot"><span class="range-dot green"></span> Objetivo referencial 0.8–1.2 kPa</div>
+            <div class="sparkline"><canvas id="sparkVpd" aria-label="Tendencia de VPD"></canvas></div>
+          </article>
+          <article class="kpi-card kpi-radiation">
+            <div class="kpi-top"><span class="kpi-icon">✺</span><span class="trend neutral" id="radTrend">☼ diurna</span></div>
+            <div class="kpi-label">Radiación fotosintética</div>
+            <div class="kpi-value"><span id="radValue">486</span><small>µmol/m²/s</small></div>
+            <div class="kpi-foot"><span class="range-dot green"></span> PAR · sensor de radiación</div>
+            <div class="sparkline"><canvas id="sparkRad" aria-label="Tendencia de radiación"></canvas></div>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel chart-panel">
+            <div class="panel-header"><div><div class="eyebrow dark-eyebrow">ÚLTIMOS 60 MIN</div><h3>Dinámica del microclima</h3></div><div class="chart-legend"><span><i class="legend-temp"></i> Temp.</span><span><i class="legend-hum"></i> Humedad</span></div></div>
+            <div class="chart-wrap"><canvas id="homeChart" aria-label="Gráfico de temperatura y humedad"></canvas></div>
+            <div class="panel-bottom"><span><span class="range-dot green"></span> Sensores respondiendo</span><span>Intervalo de muestreo: 1 min</span></div>
+          </article>
+          <article class="panel device-panel">
+            <div class="panel-header"><div><div class="eyebrow dark-eyebrow">INFRAESTRUCTURA</div><h3>Estado del sistema</h3></div><span class="device-status"><span class="pulse-dot"></span> Operativo</span></div>
+            <div class="device-visual"><div class="device-orbit orbit-one"></div><div class="device-orbit orbit-two"></div><div class="pi-chip"><span>Rπ</span><small>4 B</small></div><div class="device-wave"></div></div>
+            <div class="device-stats"><div><small>Edge node</small><b>Raspberry Pi 4 B</b></div><div><small>Bus industrial</small><b>Modbus RTU / RS485</b></div><div><small>Latencia de lectura</small><b id="latencyValue">8.2 <small>ms</small></b></div><div><small>Último ciclo</small><b id="cycleValue">1.0 s</b></div></div>
+            <div class="device-bottom"><span class="status-dot"></span> <span id="modbusStatus">Bus Modbus estable</span><span class="device-link">●</span></div>
+          </article>
+        </div>
+        <div class="bottom-grid">
+          <article class="panel alerts-panel"><div class="panel-header"><div><div class="eyebrow dark-eyebrow">CENTRO DE ALERTAS</div><h3>Eventos recientes</h3></div><span class="subtle-count" id="alertCount">02 EVENTOS</span></div><div id="alertsList" class="alerts-list"></div><button class="text-button" data-go="configuraciones">Configurar umbrales <span>↗</span></button></article>
+          <article class="panel insight-panel"><div class="insight-symbol">✳</div><div class="eyebrow">INSIGHT DEL SISTEMA</div><h3>El equilibrio está en los detalles.</h3><p>El VPD combina temperatura y humedad para estimar la demanda evaporativa del ambiente. Mantenerlo en una zona adecuada ayuda a gestionar el estrés hídrico del cultivo.</p><a href="#analytics" class="inline-link">Ver zona VPD <span>→</span></a><div class="insight-decoration">LABSENS</div></article>
+        </div>
+      </section>
+
+      <section class="page-section" id="page-analytics">
+        <div class="page-title-row"><div><div class="eyebrow dark-eyebrow">LECTURA DE DATOS</div><h1>Analytics <span class="heading-spark">✳</span></h1><p>Compara variables y descubre patrones en el microclima.</p></div><span class="live-pill"><span class="pulse-dot"></span> DATOS ACTUALIZADOS</span></div>
+        <div class="analytics-kpis"><div class="mini-stat"><small>Temperatura media</small><b id="avgTemp">25.1 °C</b><span>Últimas 24 horas</span></div><div class="mini-stat"><small>Humedad media</small><b id="avgHum">67.8 %</b><span>Últimas 24 horas</span></div><div class="mini-stat"><small>VPD medio</small><b id="avgVpd">0.94 kPa</b><span>Últimas 24 horas</span></div><div class="mini-stat"><small>Disponibilidad de datos</small><b>99.8 %</b><span class="stat-good">● Conectividad simulada</span></div></div>
+        <div class="analytics-grid"><article class="panel"><div class="panel-header"><div><div class="eyebrow dark-eyebrow">COMPARATIVA MULTIVARIABLE</div><h3>Variables por hora</h3></div><select id="analyticsRange" class="select-control" aria-label="Rango del gráfico"><option value="12">Últimas 12 h</option><option value="24" selected>Últimas 24 h</option><option value="6">Últimas 6 h</option></select></div><div class="chart-wrap tall"><canvas id="analyticsChart" aria-label="Comparación de variables ambientales"></canvas></div><p class="chart-note">Las variables con unidades diferentes se normalizan para facilitar la comparación. Consulta los valores exactos en el historial.</p></article>
+          <article class="panel vpd-panel"><div class="panel-header"><div><div class="eyebrow dark-eyebrow">ESTADO FITOSANITARIO</div><h3>Zona óptima de VPD</h3></div><span class="tag-soft">REFERENCIAL</span></div><div class="vpd-meter"><div class="meter-labels"><span>0.0</span><span>0.8–1.2 kPa</span><span>2.5</span></div><div class="meter-track"><div class="meter-optimal"></div><div class="meter-marker" id="vpdMarker"><span id="vpdMarkerLabel">0.92</span></div></div><div class="meter-scale"><span>Bajo</span><span>Óptimo</span><span>Alto</span></div></div><div class="vpd-reading"><div><small>VPD actual</small><b><span id="analyticsVpd">0.92</span> <small>kPa</small></b></div><span class="zone-badge" id="vpdZoneBadge">● Zona objetivo</span></div><p class="vpd-description" id="vpdDescription">El valor actual está dentro de la banda objetivo referencial para crecimiento vegetativo. Ajusta el rango según especie y etapa del cultivo.</p><div class="vpd-factors"><div><span>Temperatura</span><b id="vpdTempFactor">25.4 °C</b></div><div><span>Humedad relativa</span><b id="vpdHumFactor">68.2 %</b></div></div></article></div>
+        <article class="panel hourly-panel"><div class="panel-header"><div><div class="eyebrow dark-eyebrow">RESUMEN DIARIO</div><h3>Estadísticas por hora</h3></div><span class="muted-text">Valores de demostración</span></div><div class="table-scroll"><table><thead><tr><th>Franja horaria</th><th>Temp. media</th><th>Humedad media</th><th>VPD medio</th><th>Radiación media</th><th>Estado</th></tr></thead><tbody id="hourlyTable"></tbody></table></div></article>
+      </section>
+
+      <section class="page-section" id="page-tutorial">
+        <div class="page-title-row"><div><div class="eyebrow dark-eyebrow">DOCUMENTACIÓN TÉCNICA</div><h1>Guía de implementación <span class="heading-spark">✳</span></h1><p>Del sensor al dashboard: prepara tu stack de monitoreo edge.</p></div><span class="tag-soft">RASPBERRY PI 4 B</span></div>
+        <div class="tutorial-intro"><div><span class="tutorial-icon">⌘</span><div><h3>Arquitectura de referencia</h3><p>Sensores RS485 → conversor USB-RS485 → Raspberry Pi → Python → Supabase → dashboard.</p></div></div><div class="architecture"><span>SENSORES</span><b>→</b><span>RS485</span><b>→</b><span>RASPBERRY PI</span><b>→</b><span>SUPABASE</span></div></div>
+        <div class="tutorial-layout"><div class="tutorial-steps">
+          <button class="tutorial-step active" data-step="0"><span>01</span><span><b>Conexión física</b><small>Modbus RTU · RS485</small></span><span>↗</span></button>
+          <button class="tutorial-step" data-step="1"><span>02</span><span><b>Preparar Raspberry Pi</b><small>Python y dependencias</small></span><span>↗</span></button>
+          <button class="tutorial-step" data-step="2"><span>03</span><span><b>Lectura Modbus con Python</b><small>Adquisición de registros</small></span><span>↗</span></button>
+          <button class="tutorial-step" data-step="3"><span>04</span><span><b>Enviar datos a Supabase</b><small>Persistencia en la nube</small></span><span>↗</span></button>
+          <button class="tutorial-step" data-step="4"><span>05</span><span><b>Conectar el dashboard</b><small>URL, clave y tabla</small></span><span>↗</span></button>
+        </div><article class="panel tutorial-content" id="tutorialContent"></article></div>
+        <div class="notice-box"><span>ⓘ</span><p><b>Importante:</b> las direcciones Modbus, baud rate, paridad y registros dependen del modelo de sensor. Revisa su manual antes de energizar o escribir registros. Nunca expongas claves secretas de Supabase en el frontend.</p></div>
+      </section>
+
+      <section class="page-section" id="page-historial">
+        <div class="page-title-row"><div><div class="eyebrow dark-eyebrow">REGISTRO DE ADQUISICIÓN</div><h1>Historial de datos <span class="heading-spark">✳</span></h1><p>Filtra mediciones, inspecciona eventos y exporta tus datos.</p></div><button class="primary-button" id="exportCsv">↓ Exportar CSV</button></div>
+        <div class="history-summary"><div><span class="summary-icon">◷</span><div><small>Registros disponibles</small><b id="historyTotal">120</b></div></div><div><span class="summary-icon">⌁</span><div><small>Intervalo de captura</small><b>1 minuto</b></div></div><div><span class="summary-icon">◉</span><div><small>Fuente de datos</small><b id="historySource">Simulación local</b></div></div></div>
+        <article class="panel history-panel"><div class="history-filters"><label>Desde<input type="date" id="dateFrom"></label><label>Hasta<input type="date" id="dateTo"></label><label>Buscar variable<select id="variableFilter"><option value="all">Todas las variables</option><option value="temp">Temperatura</option><option value="hum">Humedad</option><option value="vpd">VPD</option><option value="rad">Radiación</option></select></label><label>Estado<select id="statusFilter"><option value="all">Todos</option><option value="normal">Normal</option><option value="warning">Alerta</option></select></label><button class="secondary-button" id="clearFilters">Limpiar filtros</button></div><div class="table-scroll"><table class="history-table"><thead><tr><th>Fecha y hora</th><th>Temperatura</th><th>Humedad</th><th>VPD</th><th>Radiación PAR</th><th>Estado</th></tr></thead><tbody id="historyTable"></tbody></table></div><div class="table-footer"><span id="tableInfo">Mostrando 1–10 de 120 registros</span><div class="pagination" id="pagination"></div></div></article>
+        <p class="footnote">Los datos iniciales se generan localmente para demostración. Al configurar Supabase, el dashboard intentará consultar la tabla definida.</p>
+      </section>
+
+      <section class="page-section" id="page-configuraciones">
+        <div class="page-title-row"><div><div class="eyebrow dark-eyebrow">CONTROL DEL SISTEMA</div><h1>Configuraciones <span class="heading-spark">✳</span></h1><p>Conecta tu backend, ajusta umbrales y administra el modo de datos.</p></div><span class="tag-soft">AJUSTES LOCALES</span></div>
+        <div class="settings-grid"><div class="settings-main">
+          <article class="panel settings-panel"><div class="settings-heading"><span class="settings-icon">⌘</span><div><h3>Conexión Supabase</h3><p>Configura el cliente para leer y consultar mediciones.</p></div><span class="tag-soft">CLIENT SDK</span></div><form id="supabaseForm" class="settings-form"><label>Project URL<input type="url" id="supabaseUrl" placeholder="https://tu-proyecto.supabase.co" autocomplete="url"></label><label>Anon / Publishable Key<input type="password" id="supabaseKey" placeholder="sb_publishable_… o anon key" autocomplete="off"></label><label>Nombre de la tabla<input type="text" id="tableName" value="greenhouse_readings" placeholder="greenhouse_readings"></label><div class="inline-check"><input type="checkbox" id="rememberConfig"><label for="rememberConfig">Recordar configuración en este navegador</label></div><div class="form-actions"><button type="submit" class="primary-button">Conectar y probar <span>↗</span></button><span class="form-message" id="supabaseMessage" role="status">Sin conexión configurada</span></div></form><div class="security-note"><span>♧</span><p>Usa solo una clave pública (anon/publishable) protegida con políticas RLS. Nunca pegues la <b>service_role key</b> aquí. Las credenciales solo se guardan localmente si marcas la casilla.</p></div></article>
+          <article class="panel settings-panel"><div class="settings-heading"><span class="settings-icon">♧</span><div><h3>Umbrales de alerta</h3><p>Define los límites visuales para el monitoreo.</p></div></div><div class="threshold-list"><div class="threshold-row"><div><b>Temperatura máxima</b><small>Alerta sobre este valor</small></div><strong><span id="tempThresholdLabel">30</span> °C</strong><input type="range" min="20" max="45" value="30" id="tempThreshold"></div><div class="threshold-row"><div><b>Humedad mínima</b><small>Alerta bajo este valor</small></div><strong><span id="humThresholdLabel">45</span> %</strong><input type="range" min="20" max="70" value="45" id="humThreshold"></div><div class="threshold-row"><div><b>VPD máximo</b><small>Alerta sobre este valor</small></div><strong><span id="vpdThresholdLabel">1.4</span> kPa</strong><input type="range" min="0.5" max="2.5" step="0.1" value="1.4" id="vpdThreshold"></div><div class="threshold-row"><div><b>Radiación mínima</b><small>Alerta bajo este valor</small></div><strong><span id="radThresholdLabel">150</span> µmol</strong><input type="range" min="0" max="500" step="10" value="150" id="radThreshold"></div></div></article>
+        </div><div class="settings-side"><article class="panel mode-panel"><div class="settings-heading"><span class="settings-icon">◉</span><div><h3>Modo de operación</h3><p>Selecciona el origen de las lecturas.</p></div></div><div class="mode-choice"><div><b>Simulación en vivo</b><small>Genera valores plausibles para pruebas UI.</small></div><label class="switch"><input type="checkbox" id="simulationToggle" checked><span></span></label></div><div class="mode-state"><span class="status-dot" id="modeDot"></span><span id="modeStateText">Simulación activa</span></div><div class="mode-separator"></div><div class="mode-info"><span>●</span><p>La simulación no representa mediciones físicas reales. Desactívala cuando hayas conectado una fuente de datos compatible.</p></div></article><article class="panel system-info"><div class="eyebrow dark-eyebrow">INFORMACIÓN DEL NODO</div><h3>Labsens Edge</h3><div class="info-row"><span>Dispositivo</span><b>Raspberry Pi 4 B</b></div><div class="info-row"><span>Protocolo</span><b>Modbus RTU</b></div><div class="info-row"><span>Interfaz</span><b>RS485</b></div><div class="info-row"><span>Frontend</span><b>Labsens UI v1.0</b></div><div class="info-row"><span>Última actualización</span><b id="settingsUpdated">—</b></div></article></div></div>
+      </section>
+      <footer class="app-footer"><span>© 2026 LABSENS PUCV · INVERNADERO IoT</span><span>Diseñado para agricultura de precisión <b>✳</b></span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
 </body>
 </html>
